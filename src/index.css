@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, #fdf2f8 0%, #f6f7f6 100%);
+    min-height: 100vh;
+    margin: 0;
+    min-width: 320px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-petal-500 hover:bg-petal-600 text-white font-medium py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-sage-100 hover:bg-sage-200 text-sage-800 font-medium py-3 px-6 rounded-2xl transition-all duration-300 border border-sage-300;
+  }
+  
+  .card {
+    @apply bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-white/50;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-sage-200 focus:border-petal-400 focus:ring-2 focus:ring-petal-100 outline-none transition-all duration-200 bg-white/50;
+  }
+  
+  .text-handwritten {
+    @apply font-handwritten;
+  }
+  
+  .text-clean {
+    @apply font-clean;
+  }
+}
