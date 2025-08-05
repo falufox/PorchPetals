@@ -79,7 +79,7 @@ export const ConfirmationPage: React.FC = () => {
       </div>
 
       {/* Next Steps */}
-      <div className="card p-6 bg-gradient-to-br from-petal-50 to-cream-50">
+      <div className="card p-6 bg-gradient-to-br from-petal-50 to-kraft-50">
         <h2 className="text-xl font-handwritten font-semibold text-sage-800 mb-4">
           What happens next?
         </h2>

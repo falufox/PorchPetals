@@ -175,7 +175,7 @@ export const CheckoutPage: React.FC = () => {
               <h2 className="text-lg font-semibold text-sage-800">Payment</h2>
             </div>
             
-            <div className="bg-cream-50 border border-cream-200 rounded-lg p-4 mb-4">
+            <div className="bg-kraft-50 border border-kraft-200 rounded-lg p-4 mb-4">
               <p className="text-sm text-sage-600">
                 💳 Secure payment processing with Stripe
               </p>
