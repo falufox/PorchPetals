@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, MapPin, Clock } from 'lucide-react';
+import { StripeCheckout } from '../components/StripeCheckout';
 
 export const CheckoutPage: React.FC = () => {
+  const navigate = useNavigate();
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
     unitNumber: '',
@@ -12,6 +14,7 @@ export const CheckoutPage: React.FC = () => {
   });
 
   const [selectedDeliveryWindow, setSelectedDeliveryWindow] = useState('');
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const deliveryWindows = [
     { id: '1', label: 'Before 2:00 PM', time: '2:00 PM', available: true },
@@ -19,11 +22,33 @@ export const CheckoutPage: React.FC = () => {
     { id: '3', label: 'Before 7:00 PM', time: '7:00 PM', available: true },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // This will integrate with Stripe for payment processing
-    console.log('Order submitted:', { customerInfo, selectedDeliveryWindow });
+  const handlePaymentSuccess = (paymentIntent: any) => {
+    setIsProcessingPayment(false);
+    
+    // Create order object
+    const order = {
+      id: 'PF-' + Date.now(),
+      customerInfo,
+      deliveryWindow: selectedDeliveryWindow,
+      paymentIntent,
+      total: 30, // This would come from cart context
+      status: 'confirmed',
+      createdAt: new Date()
+    };
+    
+    // Store order in localStorage for demo (in production, send to backend)
+    localStorage.setItem('lastOrder', JSON.stringify(order));
+    
+    // Navigate to confirmation page
+    navigate('/confirmation');
   };
+
+  const handlePaymentError = (error: string) => {
+    setIsProcessingPayment(false);
+    alert('Payment failed: ' + error);
+  };
+
+  const isFormValid = customerInfo.name && customerInfo.unitNumber && selectedDeliveryWindow;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -48,7 +73,7 @@ export const CheckoutPage: React.FC = () => {
               <h2 className="text-lg font-semibold text-sage-800">Delivery Information</h2>
             </div>
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-sage-700 mb-1">
@@ -117,7 +142,7 @@ export const CheckoutPage: React.FC = () => {
                   placeholder="Any special delivery instructions..."
                 />
               </div>
-            </form>
+            </div>
           </div>
 
           {/* Delivery Window */}
@@ -156,41 +181,19 @@ export const CheckoutPage: React.FC = () => {
               </p>
             </div>
             
-            {/* Stripe payment form will go here */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-sage-700 mb-1">
-                  Card Number
-                </label>
-                <input
-                  type="text"
-                  className="input-field"
-                  placeholder="1234 5678 9012 3456"
-                />
+            {isFormValid ? (
+              <StripeCheckout
+                amount={30}
+                onSuccess={handlePaymentSuccess}
+                onError={handlePaymentError}
+                loading={isProcessingPayment}
+              />
+            ) : (
+              <div className="text-center py-8 text-sage-500">
+                <p className="mb-2">Please fill out all required fields</p>
+                <p className="text-sm">Name, unit number, and delivery window are required</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-sage-700 mb-1">
-                    Expiry
-                  </label>
-                  <input
-                    type="text"
-                    className="input-field"
-                    placeholder="MM/YY"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-sage-700 mb-1">
-                    CVC
-                  </label>
-                  <input
-                    type="text"
-                    className="input-field"
-                    placeholder="123"
-                  />
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -232,12 +235,9 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
             
-            <button
-              type="submit"
-              className="btn-primary w-full text-lg py-4"
-            >
-              Complete Order
-            </button>
+            <div className="text-center text-sm text-sage-600">
+              💳 Complete payment on the left to finish your order
+            </div>
             
             <p className="text-xs text-sage-500 text-center mt-3">
               By placing this order, you agree to our simple terms: fresh flowers, same-day delivery, and lots of joy!

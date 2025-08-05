@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Clock, ArrowRight } from 'lucide-react';
-import { Bouquet, OrderItem } from '../types';
+import { ShoppingCart, Clock, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
+import type { Bouquet, OrderItem, DoorStyle } from '../types';
+import { DoorPreview } from '../components/DoorPreview';
+import { useInventory } from '../hooks/useInventory';
 
 // Mock data - this will be replaced with Notion API
 const mockBouquets: Bouquet[] = [
@@ -44,7 +46,13 @@ const mockBouquets: Bouquet[] = [
 ];
 
 export const OrderPage: React.FC = () => {
+  const { bouquets, loading, error, lastUpdated, refresh } = useInventory();
   const [cart, setCart] = useState<OrderItem[]>([]);
+  const [selectedBouquetForPreview, setSelectedBouquetForPreview] = useState<Bouquet | null>(null);
+  const [, setSelectedDoorStyle] = useState<DoorStyle | null>(null);
+  
+  // Use live bouquets from Notion, fallback to mock data
+  const displayBouquets = bouquets.length > 0 ? bouquets : mockBouquets;
 
   const addToCart = (bouquet: Bouquet) => {
     const existingItem = cart.find(item => item.bouquetId === bouquet.id);
@@ -83,20 +91,55 @@ export const OrderPage: React.FC = () => {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-handwritten font-bold text-sage-800 mb-2">
-          Today's Fresh Bouquets
-        </h1>
-        <div className="flex items-center text-sage-600">
-          <Clock className="w-4 h-4 mr-2" />
-          <span>Orders close at 6:00 PM for same-day delivery</span>
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="text-3xl font-handwritten font-bold text-sage-800">
+            Today's Fresh Bouquets
+          </h1>
+          <button
+            onClick={refresh}
+            disabled={loading}
+            className="btn-secondary text-sm px-3 py-2"
+          >
+            <RefreshCw className={`w-4 h-4 mr-1 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </button>
         </div>
+        
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sage-600 space-y-2 sm:space-y-0">
+          <div className="flex items-center">
+            <Clock className="w-4 h-4 mr-2" />
+            <span>Orders close at 6:00 PM for same-day delivery</span>
+          </div>
+          
+          {lastUpdated && (
+            <div className="text-sm">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </div>
+          )}
+        </div>
+        
+        {error && (
+          <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center">
+            <AlertCircle className="w-4 h-4 text-red-600 mr-2 flex-shrink-0" />
+            <span className="text-red-700 text-sm">{error}</span>
+          </div>
+        )}
+        
+        {loading && bouquets.length === 0 && (
+          <div className="mt-3 p-3 bg-sage-50 border border-sage-200 rounded-lg">
+            <div className="flex items-center">
+              <RefreshCw className="w-4 h-4 text-sage-600 mr-2 animate-spin" />
+              <span className="text-sage-700 text-sm">Loading fresh inventory...</span>
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
         {/* Bouquet Grid */}
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mockBouquets.map((bouquet) => (
+            {displayBouquets.map((bouquet) => (
               <div key={bouquet.id} className="card p-6">
                 {/* Placeholder for bouquet image */}
                 <div className="bg-gradient-to-br from-petal-100 to-sage-100 rounded-2xl h-64 mb-4 flex items-center justify-center relative">
@@ -128,24 +171,42 @@ export const OrderPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <button
-                  onClick={() => addToCart(bouquet)}
-                  disabled={bouquet.available === 0}
-                  className={`w-full ${
-                    bouquet.available === 0 
-                      ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-                      : 'btn-primary'
-                  } transition-all duration-200`}
-                >
-                  {bouquet.available === 0 ? 'Sold Out' : 'Add to Cart'}
-                </button>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSelectedBouquetForPreview(bouquet)}
+                    className="w-full btn-secondary text-sm"
+                  >
+                    Preview on Door
+                  </button>
+                  <button
+                    onClick={() => addToCart(bouquet)}
+                    disabled={bouquet.available === 0}
+                    className={`w-full ${
+                      bouquet.available === 0 
+                        ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                        : 'btn-primary'
+                    } transition-all duration-200`}
+                  >
+                    {bouquet.available === 0 ? 'Sold Out' : 'Add to Cart'}
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Door Preview */}
+        <div className="xl:col-span-1">
+          <div className="sticky top-24">
+            <DoorPreview 
+              selectedBouquet={selectedBouquetForPreview}
+              onDoorStyleChange={setSelectedDoorStyle}
+            />
+          </div>
+        </div>
+
         {/* Cart Sidebar */}
-        <div className="lg:col-span-1">
+        <div className="xl:col-span-1">
           <div className="card p-6 sticky top-24">
             <div className="flex items-center mb-4">
               <ShoppingCart className="w-5 h-5 mr-2 text-sage-700" />
