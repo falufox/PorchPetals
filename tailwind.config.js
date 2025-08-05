@@ -7,18 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Sophisticated Cottagecore Palette - muted botanicals with refined depth
+        // Sophisticated Cottagecore Palette - coral sunset blooms
         petal: {
-          50: '#fdf7f3',    // Warm ivory
-          100: '#f9e8dc',   // Soft blush
-          200: '#f2c6aa',   // Muted peach
-          300: '#e5a578',   // Dusty rose
-          400: '#d1845c',   // Vintage coral
-          500: '#b8664a',   // Terracotta
-          600: '#9e4f3a',   // Deep clay
-          700: '#7d3c2c',   // Rich auburn
-          800: '#5c2b20',   // Dark chocolate
-          900: '#3d1c15',   // Espresso
+          50: '#fef7f5',    // Coral mist
+          100: '#fed7d1',   // Soft coral blush
+          200: '#fcb8a8',   // Peach coral
+          300: '#f99583',   // Warm coral
+          400: '#f56d5a',   // Vibrant coral
+          500: '#ee4a36',   // Coral sunset
+          600: '#d63c2a',   // Deep coral
+          700: '#b32f20',   // Rich coral
+          800: '#8f2518',   // Dark coral
+          900: '#6b1c11',   // Coral shadow
         },
         sage: {
           50: '#f7f8f4',    // Linen white

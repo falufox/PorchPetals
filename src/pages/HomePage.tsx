@@ -24,9 +24,9 @@ export const HomePage: React.FC = () => {
           </div>
           
           <p className="text-xl text-body text-sage-700 max-w-3xl mx-auto leading-relaxed font-medium">
-            Handcrafted bouquets delivered same-day to neighbors in our building. 
-            Each arrangement is thoughtfully curated with seasonal blooms, wrapped in kraft paper, 
-            and delivered with a touch of <span className="text-handwritten text-petal-600 text-2xl">magic</span>.
+            Grown with love in my container garden and delivered fresh to your door. 
+            Order before midnight and I'll cut your blooms the next morning for same-day, 
+            no-contact delivery that spreads the <span className="text-handwritten text-petal-600 text-2xl">joy</span> flowers bring me.
           </p>
         </div>
         
@@ -47,19 +47,19 @@ export const HomePage: React.FC = () => {
               <div className="bg-petal-100 p-2 rounded-full mr-3 group-hover:bg-petal-200 transition-colors duration-300">
                 <Clock className="w-5 h-5 text-petal-600" />
               </div>
-              <span className="font-medium">Same-day delivery</span>
+              <span className="font-medium">Cut fresh daily</span>
             </div>
             <div className="flex items-center group">
               <div className="bg-sage-100 p-2 rounded-full mr-3 group-hover:bg-sage-200 transition-colors duration-300">
                 <MapPin className="w-5 h-5 text-sage-600" />
               </div>
-              <span className="font-medium">Building residents only</span>
+              <span className="font-medium">No-contact delivery</span>
             </div>
             <div className="flex items-center group">
               <div className="bg-rosewood-100 p-2 rounded-full mr-3 group-hover:bg-rosewood-200 transition-colors duration-300">
                 <Heart className="w-5 h-5 text-rosewood-600" />
               </div>
-              <span className="font-medium">Grown with care</span>
+              <span className="font-medium">Container garden grown</span>
             </div>
           </div>
         </div>
@@ -141,6 +141,58 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
+      {/* Houseplant Section */}
+      <div className="mb-16">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl text-display text-sage-800 mb-3">Add a Houseplant Friend</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-sage-400 to-lavender-400 mx-auto rounded-full mb-4"></div>
+          <p className="text-lg text-body text-sage-600 max-w-2xl mx-auto">
+            Adopt a green companion to pair with your bouquet delivery
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="card p-6 hover-lift group text-center">
+            <div className="bg-gradient-to-br from-sage-100 via-sage-50 to-kraft-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
+              <span className="text-6xl animate-gentle-bounce">🌱</span>
+              <div className="absolute inset-0 paper-texture opacity-20"></div>
+            </div>
+            <h3 className="text-lg text-display text-sage-800 mb-2">Pothos Varieties</h3>
+            <p className="text-body text-sage-600 text-sm">
+              Easy-care trailing plants perfect for beginners
+            </p>
+          </div>
+          
+          <div className="card p-6 hover-lift group text-center">
+            <div className="bg-gradient-to-br from-lavender-100 via-lavender-50 to-sage-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
+              <span className="text-6xl animate-gentle-bounce">🪴</span>
+              <div className="absolute inset-0 linen-texture opacity-20"></div>
+            </div>
+            <h3 className="text-lg text-display text-sage-800 mb-2">Succulents</h3>
+            <p className="text-body text-sage-600 text-sm">
+              Low-maintenance beauties in decorative pots
+            </p>
+          </div>
+          
+          <div className="card p-6 hover-lift group text-center">
+            <div className="bg-gradient-to-br from-petal-100 via-kraft-50 to-sage-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
+              <span className="text-6xl animate-gentle-bounce">🍃</span>
+              <div className="absolute inset-0 paper-texture opacity-20"></div>
+            </div>
+            <h3 className="text-lg text-display text-sage-800 mb-2">Seasonal Surprises</h3>
+            <p className="text-body text-sage-600 text-sm">
+              Ask about what's thriving in my collection
+            </p>
+          </div>
+        </div>
+        
+        <div className="text-center mt-8">
+          <p className="text-body text-sage-600 italic">
+            Each houseplant can be added to your flower order for convenient same-day delivery
+          </p>
+        </div>
+      </div>
+
       {/* How It Works */}
       <div className="card p-12 mb-16 linen-texture relative overflow-hidden">
         {/* Decorative elements */}
@@ -152,7 +204,7 @@ export const HomePage: React.FC = () => {
             How Porch Petals Works
           </h2>
           <p className="text-lg text-body text-sage-600 max-w-2xl mx-auto">
-            A simple, thoughtful process designed to bring joy to your doorstep
+            From my container garden to your door - sharing the joy that flowers bring
           </p>
         </div>
         
@@ -161,29 +213,29 @@ export const HomePage: React.FC = () => {
             <div className="bg-gradient-to-br from-petal-100 to-petal-200 w-20 h-20 rounded-organic flex items-center justify-center mx-auto mb-6 shadow-soft group-hover:shadow-dreamy transition-all duration-300 group-hover:scale-105">
               <span className="text-3xl animate-gentle-bounce">🌺</span>
             </div>
-            <h3 className="text-xl text-display text-sage-800 mb-3">Pick your blooms</h3>
+            <h3 className="text-xl text-display text-sage-800 mb-3">Order before midnight</h3>
             <p className="text-body text-sage-600 leading-relaxed max-w-xs mx-auto">
-              Browse our carefully curated daily selection of fresh, locally-grown bouquets
+              Browse what's blooming in my container garden and place your order by midnight
             </p>
           </div>
           
           <div className="text-center group">
             <div className="bg-gradient-to-br from-sage-100 to-sage-200 w-20 h-20 rounded-organic flex items-center justify-center mx-auto mb-6 shadow-soft group-hover:shadow-dreamy transition-all duration-300 group-hover:scale-105">
-              <span className="text-3xl animate-gentle-bounce">🏠</span>
+              <span className="text-3xl animate-gentle-bounce">✂️</span>
             </div>
-            <h3 className="text-xl text-display text-sage-800 mb-3">Same-day delivery</h3>
+            <h3 className="text-xl text-display text-sage-800 mb-3">Fresh morning cut</h3>
             <p className="text-body text-sage-600 leading-relaxed max-w-xs mx-auto">
-              We'll lovingly wrap your bouquet in kraft paper and hang it on your door
+              I'll cut your blooms fresh the next morning when they're at their peak
             </p>
           </div>
           
           <div className="text-center group">
             <div className="bg-gradient-to-br from-lavender-100 to-lavender-200 w-20 h-20 rounded-organic flex items-center justify-center mx-auto mb-6 shadow-soft group-hover:shadow-dreamy transition-all duration-300 group-hover:scale-105">
-              <span className="text-3xl animate-gentle-bounce">✨</span>
+              <span className="text-3xl animate-gentle-bounce">🚪</span>
             </div>
-            <h3 className="text-xl text-display text-sage-800 mb-3">Enjoy the magic</h3>
+            <h3 className="text-xl text-display text-sage-800 mb-3">No-contact delivery</h3>
             <p className="text-body text-sage-600 leading-relaxed max-w-xs mx-auto">
-              Fresh flowers to brighten your day, delivered with care and a touch of whimsy
+              Same-day delivery right to your door, spreading joy one bouquet at a time
             </p>
           </div>
         </div>
@@ -203,17 +255,17 @@ export const HomePage: React.FC = () => {
             </div>
             
             <p className="text-xl text-body text-sage-700 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Orders close at <span className="font-heading font-semibold text-petal-600">6:00 PM</span> for same-day delivery. 
-              Each bouquet is freshly picked and thoughtfully arranged just for you.
+              Order before <span className="font-heading font-semibold text-petal-600">midnight</span> and I'll cut your blooms fresh the next morning. 
+              More varieties coming as different flowers bloom in my container garden!
             </p>
             
             <Link to="/order" className="btn-primary text-xl px-12 py-6 inline-flex items-center hover-bloom shadow-dreamy">
               <Sparkles className="w-6 h-6 mr-3" />
-              Start Your Order
+              Browse Garden
             </Link>
             
             <p className="text-sm text-accent text-sage-500 mt-4 italic">
-              "Where every delivery feels like a gift from a dear friend"
+              "Sharing the joy that flowers bring me, one doorstep at a time"
             </p>
           </div>
         </div>

@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
                 Porch Petals
               </h1>
               <p className="text-sm text-sage-600 leading-none font-body italic">
-                neighbor-to-neighbor blooms
+                from my porch to yours
               </p>
               {/* Decorative flourish */}
               <div className="absolute -right-8 top-1 text-lg text-petal-300/60 group-hover:text-petal-400/80 transition-colors duration-300">
