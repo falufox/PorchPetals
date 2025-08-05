@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Clock, MapPin, Sparkles } from 'lucide-react';
+import porchPetalsOwner from '../assets/porchpetalsowner.PNG';
 
 export const HomePage: React.FC = () => {
   return (
@@ -12,20 +13,37 @@ export const HomePage: React.FC = () => {
         <div className="absolute -top-8 right-1/3 text-2xl text-petal-300/40 animate-sway">🌿</div>
         
         <div className="mb-8">
-          <div className="inline-block mb-4">
-            <h1 className="text-5xl md:text-7xl text-display text-sage-800 mb-2 leading-none">
-              Fresh blooms
-            </h1>
-            <div className="flex items-center justify-center space-x-3">
-              <div className="w-12 h-px bg-gradient-to-r from-transparent via-petal-400 to-transparent"></div>
-              <span className="text-2xl md:text-3xl text-handwritten text-petal-600 italic">to your door</span>
-              <div className="w-12 h-px bg-gradient-to-r from-transparent via-petal-400 to-transparent"></div>
+          {/* Character Image with Personal Introduction */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+            <div className="relative">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-soft hover:shadow-dreamy transition-all duration-300 hover:scale-105 border-4 border-petal-200/50">
+                <img 
+                  src={porchPetalsOwner} 
+                  alt="Porch Petals Owner"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Decorative ring */}
+              <div className="absolute -inset-2 rounded-full border-2 border-petal-300/20 animate-pulse"></div>
+            </div>
+            
+            <div className="max-w-md">
+              <div className="inline-block mb-4">
+                <h1 className="text-4xl md:text-6xl text-display text-sage-800 mb-2 leading-none">
+                  Fresh blooms
+                </h1>
+                <div className="flex items-center justify-center space-x-3">
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-petal-400 to-transparent"></div>
+                  <span className="text-xl md:text-2xl text-handwritten text-petal-600 italic">to your door</span>
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-petal-400 to-transparent"></div>
+                </div>
+              </div>
             </div>
           </div>
           
           <p className="text-xl text-body text-sage-700 max-w-3xl mx-auto leading-relaxed font-medium">
-            Grown with love in my container garden and delivered fresh to your door. 
-            Order before midnight and I'll cut your blooms the next morning for same-day, 
+            Hi! I'm growing flowers with love in my container garden and sharing them with neighbors like you. 
+            Order before midnight and I'll cut your blooms fresh the next morning for same-day, 
             no-contact delivery that spreads the <span className="text-handwritten text-petal-600 text-2xl">joy</span> flowers bring me.
           </p>
         </div>
@@ -36,7 +54,7 @@ export const HomePage: React.FC = () => {
             Browse Today's Garden
           </Link>
           <button className="btn-secondary text-xl px-10 py-5 hover-lift">
-            Our Story
+            My Story
           </button>
         </div>
         
