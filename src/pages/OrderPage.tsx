@@ -38,8 +38,8 @@ export const OrderPage: React.FC = () => {
   const [cart, setCart] = useState<OrderItem[]>([]);
   const [selectedBouquetForPreview, setSelectedBouquetForPreview] = useState<Bouquet | null>(null);
   
-  // Use live bouquets from Notion, fallback to mock data
-  const displayBouquets = bouquets.length > 0 ? bouquets : mockBouquets;
+  // Use mock data only (disable Notion API temporarily)
+  const displayBouquets = mockBouquets;
 
   const addToCart = (bouquet: Bouquet) => {
     const existingItem = cart.find(item => item.bouquetId === bouquet.id);

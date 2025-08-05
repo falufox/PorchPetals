@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Bouquet } from '../types';
 
 interface DoorPreviewProps {
@@ -34,6 +34,13 @@ const bouquetOptions: Bouquet[] = [
 
 export const DoorPreview: React.FC<DoorPreviewProps> = ({ selectedBouquet }) => {
   const [previewBouquet, setPreviewBouquet] = useState<Bouquet | null>(selectedBouquet);
+  
+  // Update previewBouquet when selectedBouquet prop changes
+  useEffect(() => {
+    if (selectedBouquet) {
+      setPreviewBouquet(selectedBouquet);
+    }
+  }, [selectedBouquet]);
 
   return (
     <div className="card p-6">
