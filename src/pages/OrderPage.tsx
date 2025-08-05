@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Clock, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
-import type { Bouquet, OrderItem, DoorStyle } from '../types';
+import type { Bouquet, OrderItem } from '../types';
 import { DoorPreview } from '../components/DoorPreview';
 import { useInventory } from '../hooks/useInventory';
 
@@ -10,38 +10,26 @@ const mockBouquets: Bouquet[] = [
   {
     id: '1',
     name: 'Minnie Zinnie',
-    description: 'Bright and cheerful zinnias in warm sunset colors. Perfect for lifting spirits.',
-    flowers: ['Zinnias', 'Baby\'s Breath'],
-    colors: ['Orange', 'Pink', 'Yellow'],
+    description: 'Perfect petite bouquets with 3-4 fresh zinnia stems in vibrant colors',
+    flowers: ['Zinnias'],
+    colors: ['Pink', 'Orange', 'Yellow', 'Red'],
     size: 'small',
-    price: 12,
+    price: 6,
     image: '/api/placeholder/300/300',
-    available: 3,
+    available: 5,
     totalCapacity: 5
   },
   {
     id: '2',
-    name: 'Garden Mix',
-    description: 'A delightful mix of seasonal blooms in soft, romantic pastels.',
-    flowers: ['Lisianthus', 'Sweet Peas', 'Cosmos'],
-    colors: ['Blush', 'Lavender', 'Cream'],
+    name: 'Biggie Zinnie',
+    description: 'Fuller bouquets with 5-6 fresh zinnia stems plus beautiful filler foliage',
+    flowers: ['Zinnias', 'Foliage'],
+    colors: ['Pink', 'Orange', 'Yellow', 'Red'],
     size: 'full',
-    price: 18,
+    price: 10,
     image: '/api/placeholder/300/300',
-    available: 2,
+    available: 3,
     totalCapacity: 3
-  },
-  {
-    id: '3',
-    name: 'Sunshine Bundle',
-    description: 'Bold sunflowers and cheerful marigolds to brighten any day.',
-    flowers: ['Sunflowers', 'Marigolds', 'Solidago'],
-    colors: ['Golden Yellow', 'Orange'],
-    size: 'full',
-    price: 22,
-    image: '/api/placeholder/300/300',
-    available: 1,
-    totalCapacity: 2
   }
 ];
 
@@ -49,7 +37,6 @@ export const OrderPage: React.FC = () => {
   const { bouquets, loading, error, lastUpdated, refresh } = useInventory();
   const [cart, setCart] = useState<OrderItem[]>([]);
   const [selectedBouquetForPreview, setSelectedBouquetForPreview] = useState<Bouquet | null>(null);
-  const [, setSelectedDoorStyle] = useState<DoorStyle | null>(null);
   
   // Use live bouquets from Notion, fallback to mock data
   const displayBouquets = bouquets.length > 0 ? bouquets : mockBouquets;
@@ -143,7 +130,7 @@ export const OrderPage: React.FC = () => {
               <div key={bouquet.id} className="card p-6">
                 {/* Placeholder for bouquet image */}
                 <div className="bg-gradient-to-br from-petal-100 to-sage-100 rounded-2xl h-64 mb-4 flex items-center justify-center relative">
-                  <span className="text-6xl">🌸</span>
+                  <span className="text-6xl">🌼</span>
                   {bouquet.available === 0 && (
                     <div className="absolute inset-0 bg-black/50 rounded-2xl flex items-center justify-center">
                       <span className="text-white font-semibold">Sold Out</span>
@@ -200,7 +187,6 @@ export const OrderPage: React.FC = () => {
           <div className="sticky top-24">
             <DoorPreview 
               selectedBouquet={selectedBouquetForPreview}
-              onDoorStyleChange={setSelectedDoorStyle}
             />
           </div>
         </div>

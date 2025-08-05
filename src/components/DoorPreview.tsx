@@ -1,57 +1,39 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { Bouquet, DoorStyle } from '../types';
+import type { Bouquet } from '../types';
 
 interface DoorPreviewProps {
   selectedBouquet: Bouquet | null;
-  onDoorStyleChange?: (doorStyle: DoorStyle) => void;
 }
 
-const doorStyles: DoorStyle[] = [
+const bouquetOptions: Bouquet[] = [
   {
-    id: 'classic-white',
-    name: 'Classic White',
-    color: '#ffffff',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNkNGQ0ZDQiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIxNzAiIGN5PSIxNTAiIHI9IjQiIGZpbGw9IiM2ZDI4ZDkiLz4KPHJlY3QgeD0iMjAiIHk9IjUwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGQ0ZDQiIHN0cm9rZS13aWR0aD0iMSIvPgo8cmVjdCB4PSIyMCIgeT0iMTcwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGQ0ZDQiIHN0cm9rZS13aWR0aD0iMSIvPgo8L3N2Zz4='
+    id: '1',
+    name: 'Minnie Zinnie',
+    description: 'Perfect petite bouquets with 3-4 fresh zinnia stems in vibrant colors',
+    flowers: ['Zinnias'],
+    colors: ['Pink', 'Orange', 'Yellow', 'Red'],
+    size: 'small',
+    price: 6,
+    image: '',
+    available: 5,
+    totalCapacity: 5
   },
   {
-    id: 'sage-green',
-    name: 'Sage Green',
-    color: '#a3b8a3',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjYTNiOGEzIiBzdHJva2U9IiM3ZDlkN2QiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIxNzAiIGN5PSIxNTAiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz4KPHJlY3QgeD0iMjAiIHk9IjUwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZDlkN2QiIHN0cm9rZS13aWR0aD0iMSIvPgo8cmVjdCB4PSIyMCIgeT0iMTcwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3ZDlkN2QiIHN0cm9rZS13aWR0aD0iMSIvPgo8L3N2Zz4='
-  },
-  {
-    id: 'navy-blue',
-    name: 'Navy Blue',
-    color: '#1e40af',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMWU0MGFmIiBzdHJva2U9IiMxZTM5ODAiIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIxNzAiIGN5PSIxNTAiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz4KPHJlY3QgeD0iMjAiIHk9IjUwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTM5ODAiIHN0cm9rZS13aWR0aD0iMSIvPgo8cmVjdCB4PSIyMCIgeT0iMTcwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTM5ODAiIHN0cm9rZS13aWR0aD0iMSIvPgo8L3N2Zz4='
-  },
-  {
-    id: 'charcoal',
-    name: 'Charcoal',
-    color: '#374151',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMzc0MTUxIiBzdHJva2U9IiMxZjI5MzciIHN0cm9rZS13aWR0aD0iMiIvPgo8Y2lyY2xlIGN4PSIxNzAiIGN5PSIxNTAiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz4KPHJlY3QgeD0iMjAiIHk9IjUwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxZjI5MzciIHN0cm9rZS13aWR0aD0iMSIvPgo8cmVjdCB4PSIyMCIgeT0iMTcwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxZjI5MzciIHN0cm9rZS13aWR0aD0iMSIvPgo8L3N2Zz4='
+    id: '2',
+    name: 'Biggie Zinnie',
+    description: 'Fuller bouquets with 5-6 fresh zinnia stems plus beautiful filler foliage',
+    flowers: ['Zinnias', 'Foliage'],
+    colors: ['Pink', 'Orange', 'Yellow', 'Red'],
+    size: 'full',
+    price: 10,
+    image: '',
+    available: 3,
+    totalCapacity: 3
   }
 ];
 
-export const DoorPreview: React.FC<DoorPreviewProps> = ({ 
-  selectedBouquet, 
-  onDoorStyleChange 
-}) => {
-  const [currentDoorIndex, setCurrentDoorIndex] = useState(0);
-  const currentDoor = doorStyles[currentDoorIndex];
-
-  const nextDoor = () => {
-    const newIndex = (currentDoorIndex + 1) % doorStyles.length;
-    setCurrentDoorIndex(newIndex);
-    onDoorStyleChange?.(doorStyles[newIndex]);
-  };
-
-  const prevDoor = () => {
-    const newIndex = currentDoorIndex === 0 ? doorStyles.length - 1 : currentDoorIndex - 1;
-    setCurrentDoorIndex(newIndex);
-    onDoorStyleChange?.(doorStyles[newIndex]);
-  };
+export const DoorPreview: React.FC<DoorPreviewProps> = ({ selectedBouquet }) => {
+  const [previewBouquet, setPreviewBouquet] = useState<Bouquet | null>(selectedBouquet);
 
   return (
     <div className="card p-6">
@@ -60,85 +42,62 @@ export const DoorPreview: React.FC<DoorPreviewProps> = ({
       </h2>
       
       {/* Door Preview Container */}
-      <div className="relative bg-gradient-to-br from-sage-50 to-cream-50 rounded-2xl p-8 mb-6">
+      <div className="relative bg-gradient-to-br from-sage-50 to-kraft-50 rounded-2xl p-8 mb-6">
         <div className="relative mx-auto" style={{ width: '200px', height: '300px' }}>
-          {/* Door Background */}
-          <div 
-            className="w-full h-full rounded-lg shadow-lg border-2 relative"
-            style={{ 
-              backgroundColor: currentDoor.color,
-              borderColor: currentDoor.color === '#ffffff' ? '#d4d4d4' : 'rgba(0,0,0,0.2)'
-            }}
-          >
+          {/* Black Door */}
+          <div className="w-full h-full rounded-lg shadow-2xl border-4 border-gray-800 relative bg-black">
             {/* Door Panels */}
             <div className="absolute inset-4">
-              <div 
-                className="border rounded h-20 mb-4"
-                style={{ 
-                  borderColor: currentDoor.color === '#ffffff' ? '#d4d4d4' : 'rgba(255,255,255,0.3)'
-                }}
-              />
-              <div 
-                className="border rounded h-20"
-                style={{ 
-                  borderColor: currentDoor.color === '#ffffff' ? '#d4d4d4' : 'rgba(255,255,255,0.3)'
-                }}
-              />
+              <div className="border border-gray-600 rounded h-20 mb-4" />
+              <div className="border border-gray-600 rounded h-20" />
             </div>
             
-            {/* Door Handle */}
-            <div 
-              className="absolute w-2 h-2 rounded-full right-6 top-1/2 transform -translate-y-1/2"
-              style={{ 
-                backgroundColor: currentDoor.color === '#ffffff' ? '#6d28d9' : '#ffffff'
-              }}
-            />
+            {/* Golden Door Handle */}
+            <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+              <div className="w-3 h-6 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full shadow-md" />
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-full opacity-50" />
+            </div>
             
-            {/* Bouquet Hanging on Door */}
-            {selectedBouquet && (
-              <div className="absolute -right-8 top-16 transform rotate-12">
-                {/* Kraft Paper Wrap */}
+            {/* Bouquet Hanging on Doorknob */}
+            {previewBouquet && (
+              <div className="absolute right-2 top-1/2 transform -translate-y-1/2 translate-x-full">
                 <div className="relative">
-                  <div className="bg-kraft-200 w-12 h-16 rounded-b-lg shadow-md relative overflow-hidden">
+                  {/* Kraft Paper Wrap */}
+                  <div className="bg-kraft-200 w-16 h-20 rounded-b-2xl shadow-lg relative overflow-hidden border border-kraft-300">
                     {/* Paper texture */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-kraft-100 to-kraft-300 opacity-50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-kraft-100 to-kraft-300 opacity-60" />
                     
-                    {/* Flower representation */}
-                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-                      <div className="flex flex-wrap justify-center">
-                        {selectedBouquet.colors.map((color, index) => (
-                          <div
-                            key={index}
-                            className="w-2 h-2 rounded-full m-0.5 shadow-sm"
-                            style={{ 
-                              backgroundColor: color.toLowerCase().includes('pink') ? '#f472b6' :
-                                            color.toLowerCase().includes('yellow') ? '#fbbf24' :
-                                            color.toLowerCase().includes('orange') ? '#fb923c' :
-                                            color.toLowerCase().includes('purple') ? '#a855f7' :
-                                            color.toLowerCase().includes('blue') ? '#3b82f6' :
-                                            color.toLowerCase().includes('green') ? '#10b981' :
-                                            color.toLowerCase().includes('white') ? '#ffffff' :
-                                            color.toLowerCase().includes('cream') ? '#fef3c7' :
-                                            color.toLowerCase().includes('blush') ? '#fce7f3' :
-                                            color.toLowerCase().includes('lavender') ? '#e9d5ff' :
-                                            '#ec4899'
-                            }}
-                          />
-                        ))}
+                    {/* Zinnia Flowers */}
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <div className="flex flex-wrap justify-center gap-1">
+                        {/* Multiple zinnia blooms */}
+                        <div className="text-lg animate-gentle-bounce">🌼</div>
+                        <div className="text-lg animate-gentle-bounce" style={{ animationDelay: '0.2s' }}>🌼</div>
+                        <div className="text-lg animate-gentle-bounce" style={{ animationDelay: '0.4s' }}>🌼</div>
+                        {previewBouquet.size === 'full' && (
+                          <>
+                            <div className="text-lg animate-gentle-bounce" style={{ animationDelay: '0.6s' }}>🌼</div>
+                            <div className="text-sm animate-gentle-bounce" style={{ animationDelay: '0.8s' }}>🌿</div>
+                          </>
+                        )}
                       </div>
                     </div>
                     
                     {/* Kraft paper fold */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-kraft-400"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-2 bg-kraft-400" />
                     
-                    {/* Hanging string */}
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-px h-4 bg-kraft-600"></div>
+                    {/* Paper crinkle lines */}
+                    <div className="absolute inset-2 border-l border-kraft-400 opacity-30" />
+                    <div className="absolute inset-2 border-r border-kraft-400 opacity-30" />
                   </div>
                   
-                  {/* Flower tag */}
-                  <div className="absolute -bottom-2 -right-2 bg-cream-100 px-1 py-0.5 rounded shadow-sm">
-                    <span className="text-xs font-handwritten text-sage-700">
-                      {selectedBouquet.name}
+                  {/* Hanging loop */}
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 border-2 border-kraft-600 rounded-full bg-kraft-200" />
+                  
+                  {/* Bouquet tag */}
+                  <div className="absolute -bottom-1 -right-2 bg-kraft-100 px-2 py-1 rounded shadow-sm border border-kraft-300">
+                    <span className="text-xs font-handwritten text-sage-800">
+                      {previewBouquet.name}
                     </span>
                   </div>
                 </div>
@@ -146,78 +105,54 @@ export const DoorPreview: React.FC<DoorPreviewProps> = ({
             )}
           </div>
         </div>
+      </div>
+      
+      {/* Bouquet Selection */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-heading text-sage-800 text-center mb-3">
+          Choose a bouquet to preview:
+        </h3>
         
-        {/* Door Style Navigation */}
-        <div className="flex items-center justify-center mt-6 space-x-4">
-          <button
-            onClick={prevDoor}
-            className="p-2 rounded-full bg-white/80 hover:bg-white transition-colors shadow-md"
-          >
-            <ChevronLeft className="w-4 h-4 text-sage-600" />
-          </button>
-          
-          <div className="text-center">
-            <p className="text-sm font-medium text-sage-800">{currentDoor.name}</p>
-            <p className="text-xs text-sage-600">Door Style</p>
+        <div className="grid gap-3">
+          {bouquetOptions.map((bouquet) => (
+            <button
+              key={bouquet.id}
+              onClick={() => setPreviewBouquet(bouquet)}
+              className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+                previewBouquet?.id === bouquet.id
+                  ? 'border-petal-400 bg-petal-50 shadow-md'
+                  : 'border-sage-200 hover:border-sage-300 bg-white hover:bg-sage-50'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xl">🌼</span>
+                    <h4 className="font-semibold text-sage-800">{bouquet.name}</h4>
+                    <span className="text-lg font-bold text-petal-600">${bouquet.price}</span>
+                  </div>
+                  <p className="text-sm text-sage-600">{bouquet.description}</p>
+                </div>
+                {previewBouquet?.id === bouquet.id && (
+                  <div className="text-petal-500">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+        
+        {!previewBouquet && (
+          <div className="text-center mt-4 p-4 bg-sage-50 rounded-lg">
+            <p className="text-sm text-sage-600">
+              Select a bouquet above to see how it looks hanging on your door! 🌼
+            </p>
           </div>
-          
-          <button
-            onClick={nextDoor}
-            className="p-2 rounded-full bg-white/80 hover:bg-white transition-colors shadow-md"
-          >
-            <ChevronRight className="w-4 h-4 text-sage-600" />
-          </button>
-        </div>
+        )}
       </div>
-      
-      {/* Door Style Thumbnails */}
-      <div className="grid grid-cols-4 gap-2">
-        {doorStyles.map((door, index) => (
-          <button
-            key={door.id}
-            onClick={() => {
-              setCurrentDoorIndex(index);
-              onDoorStyleChange?.(door);
-            }}
-            className={`relative aspect-[2/3] rounded-lg border-2 transition-all duration-200 ${
-              index === currentDoorIndex 
-                ? 'border-petal-400 shadow-md scale-105' 
-                : 'border-sage-200 hover:border-sage-300'
-            }`}
-            style={{ backgroundColor: door.color }}
-          >
-            {/* Mini door details */}
-            <div className="absolute inset-1">
-              <div 
-                className="border rounded h-1/3 mb-1"
-                style={{ 
-                  borderColor: door.color === '#ffffff' ? '#d4d4d4' : 'rgba(255,255,255,0.3)'
-                }}
-              />
-              <div 
-                className="border rounded h-1/3"
-                style={{ 
-                  borderColor: door.color === '#ffffff' ? '#d4d4d4' : 'rgba(255,255,255,0.3)'
-                }}
-              />
-            </div>
-            <div 
-              className="absolute w-1 h-1 rounded-full right-1 top-1/2 transform -translate-y-1/2"
-              style={{ 
-                backgroundColor: door.color === '#ffffff' ? '#6d28d9' : '#ffffff'
-              }}
-            />
-          </button>
-        ))}
-      </div>
-      
-      {!selectedBouquet && (
-        <div className="text-center mt-4 p-4 bg-sage-50 rounded-lg">
-          <p className="text-sm text-sage-600">
-            Select a bouquet to see how it looks on your door! 🌸
-          </p>
-        </div>
-      )}
     </div>
   );
 };
