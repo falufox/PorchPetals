@@ -7,85 +7,135 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Porch Petals brand colors - soft, whimsical, friendly
+        // Sophisticated Cottagecore Palette - muted botanicals with refined depth
         petal: {
-          50: '#fdf2f8',
-          100: '#fce7f3',
-          200: '#fbcfe8',
-          300: '#f9a8d4',
-          400: '#f472b6',
-          500: '#ec4899',
-          600: '#db2777',
-          700: '#be185d',
-          800: '#9d174d',
-          900: '#831843',
-        },
-        kraft: {
-          50: '#faf9f7',
-          100: '#f5f3f0',
-          200: '#e8e4de',
-          300: '#ddd6cc',
-          400: '#c9bfae',
-          500: '#b5a990',
-          600: '#9d8f75',
-          700: '#7d6f5a',
-          800: '#5d5340',
-          900: '#3d3825',
+          50: '#fdf7f3',    // Warm ivory
+          100: '#f9e8dc',   // Soft blush
+          200: '#f2c6aa',   // Muted peach
+          300: '#e5a578',   // Dusty rose
+          400: '#d1845c',   // Vintage coral
+          500: '#b8664a',   // Terracotta
+          600: '#9e4f3a',   // Deep clay
+          700: '#7d3c2c',   // Rich auburn
+          800: '#5c2b20',   // Dark chocolate
+          900: '#3d1c15',   // Espresso
         },
         sage: {
-          50: '#f6f7f6',
-          100: '#e3e8e3',
-          200: '#c7d2c7',
-          300: '#a3b8a3',
-          400: '#7d9d7d',
-          500: '#5a825a',
-          600: '#486948',
-          700: '#3d573d',
-          800: '#334533',
-          900: '#2a372a',
+          50: '#f7f8f4',    // Linen white
+          100: '#eef1e8',   // Pale mint
+          200: '#dde2d1',   // Soft eucalyptus
+          300: '#c5cfb5',   // Muted sage
+          400: '#a8b895',   // Dusty olive
+          500: '#8a9d75',   // Garden sage
+          600: '#6d7f5a',   // Forest green
+          700: '#556246',   // Deep moss
+          800: '#3f4734',   // Pine shadow
+          900: '#2a2f23',   // Forest floor
         },
-        cream: {
-          50: '#fffef7',
-          100: '#fffcf0',
-          200: '#fef7e0',
-          300: '#feebc8',
-          400: '#fbd38d',
-          500: '#f6ad55',
-          600: '#ed8936',
-          700: '#dd6b20',
-          800: '#c05621',
-          900: '#9c4221',
+        kraft: {
+          50: '#faf9f5',    // Natural white
+          100: '#f2f0e8',   // Antique paper
+          200: '#e6e1d5',   // Vintage parchment
+          300: '#d7cfc0',   // Old linen
+          400: '#c4b8a5',   // Weathered paper
+          500: '#a89c87',   // Aged canvas
+          600: '#8b7f6a',   // Driftwood
+          700: '#6e634f',   // Cedar bark
+          800: '#514839',   // Dark timber
+          900: '#342f26',   // Charcoal wood
+        },
+        lavender: {
+          50: '#f8f6fc',    // Whisper lilac
+          100: '#ede8f5',   // Soft lavender
+          200: '#d8cce8',   // Muted purple
+          300: '#bfa8d4',   // Dusty violet
+          400: '#a185bf',   // Vintage plum
+          500: '#8264a8',   // Deep lavender
+          600: '#654c85',   // Royal purple
+          700: '#4d3a65',   // Eggplant
+          800: '#362a46',   // Dark plum
+          900: '#221b2a',   // Midnight purple
+        },
+        rosewood: {
+          50: '#faf6f4',    // Blush ivory
+          100: '#f0e6e0',   // Antique rose
+          200: '#ddc7bb',   // Faded pink
+          300: '#c5a394',   // Dusty mauve
+          400: '#a8806f',   // Rose brown
+          500: '#8a614e',   // Deep rosewood
+          600: '#6d4a3a',   // Mahogany
+          700: '#52372a',   // Dark cherry
+          800: '#38261c',   // Espresso brown
+          900: '#1f1711',   // Dark cocoa
         }
       },
       fontFamily: {
-        'handwritten': ['Caveat', 'cursive'],
-        'clean': ['Inter', 'sans-serif'],
-        'serif': ['Crimson Text', 'serif'],
+        'handwritten': ['Dancing Script', 'Caveat', 'cursive'],
+        'heading': ['Playfair Display', 'Crimson Text', 'serif'],
+        'body': ['Lora', 'Georgia', 'serif'],
+        'clean': ['Inter', 'system-ui', 'sans-serif'],
+        'accent': ['Libre Baskerville', 'Times', 'serif'],
       },
       animation: {
-        'bounce-slow': 'bounce 3s infinite',
         'float': 'float 6s ease-in-out infinite',
-        'wiggle': 'wiggle 1s ease-in-out infinite',
-        'pulse-soft': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'sway': 'sway 4s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.6s ease-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'shimmer': 'shimmer 2s linear infinite',
+        'bloom': 'bloom 0.8s ease-out',
+        'gentle-bounce': 'gentleBounce 2s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '50%': { transform: 'translateY(-8px)' },
         },
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+        sway: {
+          '0%, 100%': { transform: 'rotate(-1deg)' },
+          '50%': { transform: 'rotate(1deg)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        bloom: {
+          '0%': { transform: 'scale(0.8)', opacity: '0' },
+          '50%': { transform: 'scale(1.05)' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        gentleBounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-4px)' },
         }
       },
       spacing: {
         '18': '4.5rem',
         '88': '22rem',
+        '128': '32rem',
       },
       borderRadius: {
         'xl': '1rem',
         '2xl': '1.5rem',
         '3xl': '2rem',
+        'vintage': '0.75rem',
+        'organic': '1.5rem 0.75rem 1.25rem 1rem',
+      },
+      boxShadow: {
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'dreamy': '0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        'paper': '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+        'vintage': 'inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+      backdropBlur: {
+        'xs': '2px',
       }
     },
   },

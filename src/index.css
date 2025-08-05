@@ -1,44 +1,160 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Lora', Georgia, serif;
   }
   
   body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: linear-gradient(135deg, #fdf2f8 0%, #f6f7f6 100%);
+    font-family: 'Lora', Georgia, serif;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(247, 248, 244, 0.8) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(250, 246, 244, 0.8) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(248, 246, 252, 0.6) 0%, transparent 50%),
+      linear-gradient(135deg, #faf9f5 0%, #f7f8f4 50%, #f0e6e0 100%);
     min-height: 100vh;
     margin: 0;
     min-width: 320px;
+    background-attachment: fixed;
+  }
+  
+  /* Paper texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.015) 1px, transparent 0);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Typography enhancements */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', 'Crimson Text', serif;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  
+  p, span, div {
+    line-height: 1.6;
   }
 }
 
 @layer components {
+  /* Sophisticated Cottagecore Buttons */
   .btn-primary {
-    @apply bg-petal-500 hover:bg-petal-600 text-white font-medium py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95;
+    @apply bg-gradient-to-r from-petal-500 to-petal-600 hover:from-petal-600 hover:to-petal-700 
+           text-kraft-50 font-body font-medium py-4 px-8 rounded-vintage 
+           transition-all duration-300 shadow-soft hover:shadow-dreamy 
+           active:scale-95 relative overflow-hidden
+           border border-petal-400/20;
+  }
+  
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-primary:hover::before {
+    left: 100%;
   }
   
   .btn-secondary {
-    @apply bg-sage-100 hover:bg-sage-200 text-sage-800 font-medium py-3 px-6 rounded-2xl transition-all duration-300 border border-sage-300;
+    @apply bg-gradient-to-br from-sage-50 to-sage-100 hover:from-sage-100 hover:to-sage-200 
+           text-sage-800 font-body font-medium py-4 px-8 rounded-vintage 
+           transition-all duration-300 border-2 border-sage-200 hover:border-sage-300
+           shadow-paper hover:shadow-soft;
   }
   
+  /* Sophisticated Cards */
   .card {
-    @apply bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-white/50;
+    @apply bg-gradient-to-br from-kraft-50/90 to-white/80 backdrop-blur-sm 
+           rounded-organic shadow-soft border border-kraft-200/50
+           relative overflow-hidden;
   }
   
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  }
+  
+  /* Premium Input Fields */
   .input-field {
-    @apply w-full px-4 py-3 rounded-xl border border-sage-200 focus:border-petal-400 focus:ring-2 focus:ring-petal-100 outline-none transition-all duration-200 bg-white/50;
+    @apply w-full px-5 py-4 rounded-vintage border-2 border-sage-200/60
+           focus:border-petal-400 focus:ring-4 focus:ring-petal-100/50 
+           outline-none transition-all duration-300 
+           bg-gradient-to-br from-white/80 to-kraft-50/30
+           font-body placeholder-sage-400 shadow-paper
+           focus:shadow-soft;
+  }
+  
+  /* Typography Classes */
+  .text-display {
+    @apply font-heading text-sage-800 leading-tight;
   }
   
   .text-handwritten {
-    @apply font-handwritten;
+    @apply font-handwritten text-sage-700;
   }
   
-  .text-clean {
-    @apply font-clean;
+  .text-body {
+    @apply font-body text-sage-700 leading-relaxed;
+  }
+  
+  .text-accent {
+    @apply font-accent text-sage-800;
+  }
+  
+  /* Decorative Elements */
+  .flourish::before {
+    content: '❦';
+    color: rgba(184, 102, 74, 0.3);
+    font-size: 1.2em;
+    margin-right: 0.5em;
+  }
+  
+  .vintage-border {
+    @apply border-2 border-kraft-300 rounded-vintage shadow-vintage;
+  }
+  
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-dreamy;
+  }
+  
+  .hover-bloom {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+  
+  /* Background Patterns */
+  .linen-texture {
+    background-image: 
+      radial-gradient(circle at 2px 2px, rgba(0,0,0,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+  
+  .paper-texture {
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.015) 1px, transparent 0);
+    background-size: 20px 20px;
   }
 }
