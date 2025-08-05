@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Clock, MapPin, Sparkles } from 'lucide-react';
-import porchPetalsOwner from '../assets/porchpetalsowner.PNG';
 
 export const HomePage: React.FC = () => {
   return (
@@ -18,7 +17,7 @@ export const HomePage: React.FC = () => {
             <div className="relative">
               <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-soft hover:shadow-dreamy transition-all duration-300 hover:scale-105 border-4 border-petal-200/50">
                 <img 
-                  src={porchPetalsOwner} 
+                  src="/porchpetalsowner.PNG" 
                   alt="Porch Petals Owner"
                   className="w-full h-full object-cover"
                 />
@@ -77,7 +76,7 @@ export const HomePage: React.FC = () => {
               <div className="bg-rosewood-100 p-2 rounded-full mr-3 group-hover:bg-rosewood-200 transition-colors duration-300">
                 <Heart className="w-5 h-5 text-rosewood-600" />
               </div>
-              <span className="font-medium">Container garden grown</span>
+              <span className="font-medium">No pesticides used</span>
             </div>
           </div>
         </div>
@@ -94,7 +93,7 @@ export const HomePage: React.FC = () => {
           <div className="card p-8 hover-lift group">
             <div className="relative mb-6">
               <div className="bg-gradient-to-br from-petal-100 via-petal-50 to-rosewood-100 rounded-organic h-56 flex items-center justify-center relative overflow-hidden">
-                <span className="text-7xl animate-gentle-bounce">🌻</span>
+                <span className="text-7xl animate-gentle-bounce">🌼</span>
                 {/* Decorative corner */}
                 <div className="absolute top-3 right-3 text-lg text-petal-400/60">❦</div>
                 {/* Subtle texture overlay */}
@@ -102,23 +101,23 @@ export const HomePage: React.FC = () => {
               </div>
               {/* Vintage ribbon */}
               <div className="absolute -bottom-2 left-4 bg-kraft-200 px-3 py-1 rounded-full shadow-paper">
-                <span className="text-xs font-accent text-kraft-800">Fresh Today</span>
+                <span className="text-xs font-accent text-kraft-800">3-4 Stems</span>
               </div>
             </div>
             <h3 className="text-2xl text-display text-sage-800 mb-3">Minnie Zinnie</h3>
             <p className="text-body text-sage-600 mb-4 leading-relaxed">
-              Cheerful zinnias in warm sunset colors, paired with delicate baby's breath for a touch of whimsy
+              Perfect petite bouquets with 3-4 fresh zinnia stems in vibrant colors
             </p>
             <div className="flex justify-between items-center">
-              <span className="text-2xl font-heading font-semibold text-petal-600">$12</span>
+              <span className="text-2xl font-heading font-semibold text-petal-600">$6</span>
               <div className="text-right">
-                <span className="text-sm text-accent text-sage-500">3 available today</span>
+                <span className="text-sm text-accent text-sage-500">5 available today</span>
                 <div className="flex space-x-1 mt-1">
                   <div className="w-2 h-2 bg-petal-400 rounded-full"></div>
                   <div className="w-2 h-2 bg-petal-400 rounded-full"></div>
                   <div className="w-2 h-2 bg-petal-400 rounded-full"></div>
-                  <div className="w-2 h-2 bg-kraft-200 rounded-full"></div>
-                  <div className="w-2 h-2 bg-kraft-200 rounded-full"></div>
+                  <div className="w-2 h-2 bg-petal-400 rounded-full"></div>
+                  <div className="w-2 h-2 bg-petal-400 rounded-full"></div>
                 </div>
               </div>
             </div>
@@ -127,7 +126,7 @@ export const HomePage: React.FC = () => {
           <div className="card p-8 hover-lift group">
             <div className="relative mb-6">
               <div className="bg-gradient-to-br from-sage-100 via-sage-50 to-lavender-100 rounded-organic h-56 flex items-center justify-center relative overflow-hidden">
-                <span className="text-7xl animate-gentle-bounce">🌸</span>
+                <span className="text-7xl animate-gentle-bounce">🌼</span>
                 {/* Decorative corner */}
                 <div className="absolute top-3 right-3 text-lg text-sage-400/60">❦</div>
                 {/* Subtle texture overlay */}
@@ -135,21 +134,21 @@ export const HomePage: React.FC = () => {
               </div>
               {/* Vintage ribbon */}
               <div className="absolute -bottom-2 left-4 bg-kraft-200 px-3 py-1 rounded-full shadow-paper">
-                <span className="text-xs font-accent text-kraft-800">Seasonal Mix</span>
+                <span className="text-xs font-accent text-kraft-800">5-6 Stems + Filler</span>
               </div>
             </div>
-            <h3 className="text-2xl text-display text-sage-800 mb-3">Garden Mix</h3>
+            <h3 className="text-2xl text-display text-sage-800 mb-3">Biggie Zinnie</h3>
             <p className="text-body text-sage-600 mb-4 leading-relaxed">
-              A romantic blend of seasonal blooms in soft pastels, featuring lisianthus and sweet peas
+              Fuller bouquets with 5-6 fresh zinnia stems plus beautiful filler foliage
             </p>
             <div className="flex justify-between items-center">
-              <span className="text-2xl font-heading font-semibold text-petal-600">$18</span>
+              <span className="text-2xl font-heading font-semibold text-petal-600">$10</span>
               <div className="text-right">
-                <span className="text-sm text-accent text-sage-500">2 available today</span>
+                <span className="text-sm text-accent text-sage-500">3 available today</span>
                 <div className="flex space-x-1 mt-1">
                   <div className="w-2 h-2 bg-sage-400 rounded-full"></div>
                   <div className="w-2 h-2 bg-sage-400 rounded-full"></div>
-                  <div className="w-2 h-2 bg-kraft-200 rounded-full"></div>
+                  <div className="w-2 h-2 bg-sage-400 rounded-full"></div>
                   <div className="w-2 h-2 bg-kraft-200 rounded-full"></div>
                   <div className="w-2 h-2 bg-kraft-200 rounded-full"></div>
                 </div>
@@ -172,34 +171,34 @@ export const HomePage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="card p-6 hover-lift group text-center">
             <div className="bg-gradient-to-br from-sage-100 via-sage-50 to-kraft-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
-              <span className="text-6xl animate-gentle-bounce">🌱</span>
+              <span className="text-6xl animate-gentle-bounce">🌿</span>
               <div className="absolute inset-0 paper-texture opacity-20"></div>
             </div>
-            <h3 className="text-lg text-display text-sage-800 mb-2">Pothos Varieties</h3>
+            <h3 className="text-lg text-display text-sage-800 mb-2">Pothos</h3>
             <p className="text-body text-sage-600 text-sm">
-              Easy-care trailing plants perfect for beginners
+              Beautiful trailing vines that thrive in any light
             </p>
           </div>
           
           <div className="card p-6 hover-lift group text-center">
             <div className="bg-gradient-to-br from-lavender-100 via-lavender-50 to-sage-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
-              <span className="text-6xl animate-gentle-bounce">🪴</span>
+              <span className="text-6xl animate-gentle-bounce">🌳</span>
               <div className="absolute inset-0 linen-texture opacity-20"></div>
             </div>
-            <h3 className="text-lg text-display text-sage-800 mb-2">Succulents</h3>
+            <h3 className="text-lg text-display text-sage-800 mb-2">Rubber Plant</h3>
             <p className="text-body text-sage-600 text-sm">
-              Low-maintenance beauties in decorative pots
+              Glossy leaves and sturdy growth for statement corners
             </p>
           </div>
           
           <div className="card p-6 hover-lift group text-center">
             <div className="bg-gradient-to-br from-petal-100 via-kraft-50 to-sage-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
-              <span className="text-6xl animate-gentle-bounce">🍃</span>
+              <span className="text-6xl animate-gentle-bounce">🌱</span>
               <div className="absolute inset-0 paper-texture opacity-20"></div>
             </div>
-            <h3 className="text-lg text-display text-sage-800 mb-2">Seasonal Surprises</h3>
+            <h3 className="text-lg text-display text-sage-800 mb-2">Philodendron Birkin</h3>
             <p className="text-body text-sage-600 text-sm">
-              Ask about what's thriving in my collection
+              Striking variegated leaves with elegant white stripes
             </p>
           </div>
         </div>
@@ -253,7 +252,7 @@ export const HomePage: React.FC = () => {
             </div>
             <h3 className="text-xl text-display text-sage-800 mb-3">No-contact delivery</h3>
             <p className="text-body text-sage-600 leading-relaxed max-w-xs mx-auto">
-              Same-day delivery right to your door, spreading joy one bouquet at a time
+              Same-day delivery, left on your door
             </p>
           </div>
         </div>
