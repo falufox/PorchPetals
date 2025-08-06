@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, MapPin, Clock } from 'lucide-react';
 import { StripeCheckout } from '../components/StripeCheckout';
+import { sanitizeInput, isValidEmail, isValidPhone, isValidName, isValidUnitNumber } from '../utils/security';
 
 export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
@@ -48,7 +49,12 @@ export const CheckoutPage: React.FC = () => {
     alert('Payment failed: ' + error);
   };
 
-  const isFormValid = customerInfo.name && customerInfo.unitNumber && selectedDeliveryWindow;
+  // Enhanced form validation
+  const isFormValid = isValidName(customerInfo.name) && 
+                     isValidUnitNumber(customerInfo.unitNumber) && 
+                     selectedDeliveryWindow &&
+                     (customerInfo.email === '' || isValidEmail(customerInfo.email)) &&
+                     (customerInfo.phone === '' || isValidPhone(customerInfo.phone));
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -82,9 +88,10 @@ export const CheckoutPage: React.FC = () => {
                   <input
                     type="text"
                     value={customerInfo.name}
-                    onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
+                    onChange={(e) => setCustomerInfo({...customerInfo, name: sanitizeInput(e.target.value)})}
                     className="input-field"
                     placeholder="Your name"
+                    maxLength={100}
                     required
                   />
                 </div>
@@ -95,9 +102,10 @@ export const CheckoutPage: React.FC = () => {
                   <input
                     type="text"
                     value={customerInfo.unitNumber}
-                    onChange={(e) => setCustomerInfo({...customerInfo, unitNumber: e.target.value})}
+                    onChange={(e) => setCustomerInfo({...customerInfo, unitNumber: sanitizeInput(e.target.value)})}
                     className="input-field"
                     placeholder="e.g., 3B"
+                    maxLength={20}
                     required
                   />
                 </div>
@@ -111,9 +119,10 @@ export const CheckoutPage: React.FC = () => {
                   <input
                     type="email"
                     value={customerInfo.email}
-                    onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                    onChange={(e) => setCustomerInfo({...customerInfo, email: sanitizeInput(e.target.value)})}
                     className="input-field"
                     placeholder="your@email.com"
+                    maxLength={254}
                   />
                 </div>
                 <div>
@@ -123,9 +132,10 @@ export const CheckoutPage: React.FC = () => {
                   <input
                     type="tel"
                     value={customerInfo.phone}
-                    onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
+                    onChange={(e) => setCustomerInfo({...customerInfo, phone: sanitizeInput(e.target.value)})}
                     className="input-field"
                     placeholder="(555) 123-4567"
+                    maxLength={20}
                   />
                 </div>
               </div>
@@ -136,9 +146,10 @@ export const CheckoutPage: React.FC = () => {
                 </label>
                 <textarea
                   value={customerInfo.specialInstructions}
-                  onChange={(e) => setCustomerInfo({...customerInfo, specialInstructions: e.target.value})}
+                  onChange={(e) => setCustomerInfo({...customerInfo, specialInstructions: sanitizeInput(e.target.value)})}
                   className="input-field"
                   rows={3}
+                  maxLength={500}
                   placeholder="Any special delivery instructions..."
                 />
               </div>
