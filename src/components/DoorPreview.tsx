@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Bouquet } from '../types';
+import { BouquetImage } from './BouquetImage';
 
 interface DoorPreviewProps {
   selectedBouquet: Bouquet | null;
@@ -74,20 +75,24 @@ export const DoorPreview: React.FC<DoorPreviewProps> = ({ selectedBouquet }) => 
                     {/* Paper texture */}
                     <div className="absolute inset-0 bg-gradient-to-br from-kraft-100 to-kraft-300 opacity-60" />
                     
-                    {/* Zinnia Flowers */}
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <div className="flex flex-wrap justify-center gap-1">
-                        {/* Multiple zinnia blooms */}
-                        <div className="text-lg animate-gentle-bounce">🌼</div>
-                        <div className="text-lg animate-gentle-bounce" style={{ animationDelay: '0.2s' }}>🌼</div>
-                        <div className="text-lg animate-gentle-bounce" style={{ animationDelay: '0.4s' }}>🌼</div>
-                        {previewBouquet.size === 'full' && (
-                          <>
-                            <div className="text-lg animate-gentle-bounce" style={{ animationDelay: '0.6s' }}>🌼</div>
-                            <div className="text-sm animate-gentle-bounce" style={{ animationDelay: '0.8s' }}>🌿</div>
-                          </>
-                        )}
+                    {/* Miniature Bouquet Image */}
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="w-8 h-8 rounded-full overflow-hidden">
+                        <BouquetImage
+                          bouquetName={previewBouquet.name}
+                          alt={`${previewBouquet.name} hanging bouquet`}
+                          size="thumbnail"
+                          className="w-full h-full object-cover"
+                          loading="eager"
+                          fallbackEmoji="🌼"
+                        />
                       </div>
+                      {/* Flower stems peeking out */}
+                      {previewBouquet.size === 'full' && (
+                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2">
+                          <div className="text-xs animate-gentle-bounce" style={{ animationDelay: '0.8s' }}>🌿</div>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Kraft paper fold */}

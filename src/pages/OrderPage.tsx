@@ -4,6 +4,7 @@ import { ShoppingCart, Clock, ArrowRight, RefreshCw, AlertCircle } from 'lucide-
 import type { Bouquet, OrderItem } from '../types';
 import { DoorPreview } from '../components/DoorPreview';
 import { useInventory } from '../hooks/useInventory';
+import { BouquetImage } from '../components/BouquetImage';
 
 // Mock data - this will be replaced with Notion API
 const mockBouquets: Bouquet[] = [
@@ -128,9 +129,16 @@ export const OrderPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {displayBouquets.map((bouquet) => (
               <div key={bouquet.id} className="card p-6">
-                {/* Placeholder for bouquet image */}
-                <div className="bg-gradient-to-br from-petal-100 to-sage-100 rounded-2xl h-64 mb-4 flex items-center justify-center relative">
-                  <span className="text-6xl">🌼</span>
+                {/* Enhanced bouquet image with zoom */}
+                <div className="relative mb-4">
+                  <BouquetImage
+                    bouquetName={bouquet.name}
+                    alt={`${bouquet.name} - ${bouquet.description}`}
+                    size="main"
+                    className="h-64 rounded-2xl"
+                    showZoom={true}
+                    fallbackEmoji="🌼"
+                  />
                   {bouquet.available === 0 && (
                     <div className="absolute inset-0 bg-black/50 rounded-2xl flex items-center justify-center">
                       <span className="text-white font-semibold">Sold Out</span>

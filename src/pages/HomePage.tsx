@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Clock, MapPin, Sparkles } from 'lucide-react';
+import { BouquetImage } from '../components/BouquetImage';
 
 export const HomePage: React.FC = () => {
   return (
@@ -92,13 +93,14 @@ export const HomePage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="card p-8 hover-lift group">
             <div className="relative mb-6">
-              <div className="bg-gradient-to-br from-petal-100 via-petal-50 to-rosewood-100 rounded-organic h-56 flex items-center justify-center relative overflow-hidden">
-                <span className="text-7xl animate-gentle-bounce">🌼</span>
-                {/* Decorative corner */}
-                <div className="absolute top-3 right-3 text-lg text-petal-400/60">❦</div>
-                {/* Subtle texture overlay */}
-                <div className="absolute inset-0 paper-texture opacity-20"></div>
-              </div>
+              <BouquetImage
+                bouquetName="Minnie Zinnie"
+                alt="Minnie Zinnie bouquet - 3-4 fresh zinnia stems in vibrant colors"
+                size="main"
+                className="h-56"
+                loading="eager"
+                fallbackEmoji="🌼"
+              />
               {/* Vintage ribbon */}
               <div className="absolute -bottom-2 left-4 bg-kraft-200 px-3 py-1 rounded-full shadow-paper">
                 <span className="text-xs font-accent text-kraft-800">3-4 Stems</span>
@@ -125,13 +127,14 @@ export const HomePage: React.FC = () => {
           
           <div className="card p-8 hover-lift group">
             <div className="relative mb-6">
-              <div className="bg-gradient-to-br from-sage-100 via-sage-50 to-lavender-100 rounded-organic h-56 flex items-center justify-center relative overflow-hidden">
-                <span className="text-7xl animate-gentle-bounce">🌼</span>
-                {/* Decorative corner */}
-                <div className="absolute top-3 right-3 text-lg text-sage-400/60">❦</div>
-                {/* Subtle texture overlay */}
-                <div className="absolute inset-0 linen-texture opacity-20"></div>
-              </div>
+              <BouquetImage
+                bouquetName="Biggie Zinnie"
+                alt="Biggie Zinnie bouquet - 5-6 fresh zinnia stems with beautiful filler foliage"
+                size="main"
+                className="h-56"
+                loading="eager"
+                fallbackEmoji="🌼"
+              />
               {/* Vintage ribbon */}
               <div className="absolute -bottom-2 left-4 bg-kraft-200 px-3 py-1 rounded-full shadow-paper">
                 <span className="text-xs font-accent text-kraft-800">5-6 Stems + Filler</span>
