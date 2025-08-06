@@ -56,19 +56,29 @@ const BOUQUETS = [
   { filename: 'biggie-zinnie', folder: 'biggie-zinnie' }
 ];
 
+const HOUSEPLANTS = [
+  { filename: 'pothos', folder: 'pothos' },
+  { filename: 'rubberplant', folder: 'rubber-plant' },
+  { filename: 'philodendron birkin', folder: 'philodendron-birkin' }
+];
+
 async function optimizeImages() {
-  console.log('🌼 Optimizing Porch Petals Bouquet Images...\n');
+  console.log('🌼 Optimizing Porch Petals Images...\n');
 
   const sourceDir = path.join(process.cwd(), 'source-images');
-  const targetDir = path.join(process.cwd(), 'public', 'images', 'bouquets');
+  const bouquetTargetDir = path.join(process.cwd(), 'public', 'images', 'bouquets');
+  const houseplantTargetDir = path.join(process.cwd(), 'public', 'images', 'houseplants');
 
   // Check if source directory exists
   if (!fs.existsSync(sourceDir)) {
     console.log('❌ Source images folder not found!');
-    console.log(`Please create a "source-images" folder and add your bouquet photos.\n`);
+    console.log(`Please create a "source-images" folder and add your photos.\n`);
     console.log('Expected files:');
     BOUQUETS.forEach(bouquet => {
       console.log(`- ${bouquet.filename}.jpg (or .jpeg, .png)`);
+    });
+    HOUSEPLANTS.forEach(plant => {
+      console.log(`- ${plant.filename}.jpg (or .jpeg, .png)`);
     });
     return;
   }
@@ -95,7 +105,7 @@ async function optimizeImages() {
     }
 
     // Create target directory
-    const bouquetDir = path.join(targetDir, bouquet.folder);
+    const bouquetDir = path.join(bouquetTargetDir, bouquet.folder);
     fs.mkdirSync(bouquetDir, { recursive: true });
 
     // Process each size
@@ -128,14 +138,69 @@ async function optimizeImages() {
     }
   }
 
+  // Process each houseplant
+  for (const plant of HOUSEPLANTS) {
+    console.log(`🌿 Processing ${plant.filename}...`);
+
+    // Find source image (try different extensions)
+    let sourceFile = null;
+    const extensions = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
+    
+    for (const ext of extensions) {
+      const testPath = path.join(sourceDir, plant.filename + ext);
+      if (fs.existsSync(testPath)) {
+        sourceFile = testPath;
+        break;
+      }
+    }
+
+    if (!sourceFile) {
+      console.log(`⚠️  No source image found for ${plant.filename}`);
+      continue;
+    }
+
+    // Create target directory
+    const plantDir = path.join(houseplantTargetDir, plant.folder);
+    fs.mkdirSync(plantDir, { recursive: true });
+
+    // Process each size
+    for (const [sizeName, dimensions] of Object.entries(SIZES)) {
+      try {
+        // Generate WebP version
+        const webpPath = path.join(plantDir, `${plant.filename}-${sizeName}.webp`);
+        await sharp(sourceFile)
+          .resize(dimensions.width, dimensions.height, {
+            fit: 'cover',
+            position: 'center'
+          })
+          .webp({ quality: 85 })
+          .toFile(webpPath);
+
+        // Generate JPEG fallback
+        const jpegPath = path.join(plantDir, `${plant.filename}-${sizeName}.jpg`);
+        await sharp(sourceFile)
+          .resize(dimensions.width, dimensions.height, {
+            fit: 'cover',
+            position: 'center'
+          })
+          .jpeg({ quality: 85 })
+          .toFile(jpegPath);
+
+        console.log(`  ✅ ${sizeName}: ${dimensions.width}x${dimensions.height} (WebP + JPEG)`);
+      } catch (error) {
+        console.log(`  ❌ Failed to process ${sizeName}: ${error.message}`);
+      }
+    }
+  }
+
   console.log('\n🎉 Image optimization complete!');
   console.log('\nGenerated files:');
   
   // List generated files
   BOUQUETS.forEach(bouquet => {
-    const bouquetDir = path.join(targetDir, bouquet.folder);
+    const bouquetDir = path.join(bouquetTargetDir, bouquet.folder);
     if (fs.existsSync(bouquetDir)) {
-      console.log(`\n📁 ${bouquet.folder}/`);
+      console.log(`\n📁 bouquets/${bouquet.folder}/`);
       const files = fs.readdirSync(bouquetDir);
       files.forEach(file => {
         if (file !== 'README.md') {
@@ -147,7 +212,22 @@ async function optimizeImages() {
     }
   });
 
-  console.log('\n✨ Your bouquet images are ready to display!');
+  HOUSEPLANTS.forEach(plant => {
+    const plantDir = path.join(houseplantTargetDir, plant.folder);
+    if (fs.existsSync(plantDir)) {
+      console.log(`\n📁 houseplants/${plant.folder}/`);
+      const files = fs.readdirSync(plantDir);
+      files.forEach(file => {
+        if (file !== 'README.md') {
+          const stats = fs.statSync(path.join(plantDir, file));
+          const sizeKB = Math.round(stats.size / 1024);
+          console.log(`   ${file} (${sizeKB}KB)`);
+        }
+      });
+    }
+  });
+
+  console.log('\n✨ Your bouquet and houseplant images are ready to display!');
 }
 
 // Run the optimization

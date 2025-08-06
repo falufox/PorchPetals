@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Clock, MapPin, Sparkles } from 'lucide-react';
 import { BouquetImage } from '../components/BouquetImage';
+import { HouseplantImage } from '../components/HouseplantImage';
 
 export const HomePage: React.FC = () => {
   return (
@@ -173,10 +174,13 @@ export const HomePage: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="card p-6 hover-lift group text-center">
-            <div className="bg-gradient-to-br from-sage-100 via-sage-50 to-kraft-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
-              <span className="text-6xl animate-gentle-bounce">🌿</span>
-              <div className="absolute inset-0 paper-texture opacity-20"></div>
-            </div>
+            <HouseplantImage
+              plantName="Pothos"
+              alt="Pothos houseplant with beautiful trailing vines"
+              size="main"
+              className="mb-4"
+              fallbackEmoji="🌿"
+            />
             <h3 className="text-lg text-display text-sage-800 mb-2">Pothos</h3>
             <p className="text-body text-sage-600 text-sm">
               Beautiful trailing vines that thrive in any light
@@ -184,10 +188,13 @@ export const HomePage: React.FC = () => {
           </div>
           
           <div className="card p-6 hover-lift group text-center">
-            <div className="bg-gradient-to-br from-lavender-100 via-lavender-50 to-sage-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
-              <span className="text-6xl animate-gentle-bounce">🌳</span>
-              <div className="absolute inset-0 linen-texture opacity-20"></div>
-            </div>
+            <HouseplantImage
+              plantName="Rubber Plant"
+              alt="Rubber Plant with glossy leaves for statement corners"
+              size="main"
+              className="mb-4"
+              fallbackEmoji="🌳"
+            />
             <h3 className="text-lg text-display text-sage-800 mb-2">Rubber Plant</h3>
             <p className="text-body text-sage-600 text-sm">
               Glossy leaves and sturdy growth for statement corners
@@ -195,10 +202,13 @@ export const HomePage: React.FC = () => {
           </div>
           
           <div className="card p-6 hover-lift group text-center">
-            <div className="bg-gradient-to-br from-petal-100 via-kraft-50 to-sage-100 rounded-organic h-48 flex items-center justify-center relative overflow-hidden mb-4">
-              <span className="text-6xl animate-gentle-bounce">🌱</span>
-              <div className="absolute inset-0 paper-texture opacity-20"></div>
-            </div>
+            <HouseplantImage
+              plantName="Philodendron Birkin"
+              alt="Philodendron Birkin with striking variegated leaves and white stripes"
+              size="main"
+              className="mb-4"
+              fallbackEmoji="🌱"
+            />
             <h3 className="text-lg text-display text-sage-800 mb-2">Philodendron Birkin</h3>
             <p className="text-body text-sage-600 text-sm">
               Striking variegated leaves with elegant white stripes
