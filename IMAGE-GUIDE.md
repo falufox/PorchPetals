@@ -1,5 +1,7 @@
 # 📸 Porch Petals Image Guide
 
+> ✅ **IMAGES DEPLOYED**: Your beautiful zinnia and houseplant photos are now live!
+
 ## 🎯 What We've Built
 
 I've implemented a complete image system for your bouquets with these features:
