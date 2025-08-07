@@ -1,12 +1,87 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Clock, MapPin, Sparkles } from 'lucide-react';
+import { Heart, Clock, MapPin, Sparkles, Plus, ShoppingCart } from 'lucide-react';
 import { BouquetImage } from '../components/BouquetImage';
 import { HouseplantImage } from '../components/HouseplantImage';
+import type { Houseplant, OrderItem } from '../types';
+
+// Houseplant data with correct pricing
+const houseplants: Houseplant[] = [
+  {
+    id: 'pothos-1',
+    name: 'Pothos',
+    description: 'Beautiful trailing vines that thrive in any light',
+    care: 'Low maintenance, water when soil is dry',
+    price: 2,
+    image: '/images/houseplants/pothos/pothos-main.webp',
+    available: 8,
+    type: 'cutting'
+  },
+  {
+    id: 'philodendron-birkin-1',
+    name: 'Philodendron Birkin',
+    description: 'Striking variegated leaves with elegant white stripes',
+    care: 'Bright indirect light, weekly watering',
+    price: 2,
+    image: '/images/houseplants/philodendron-birkin/philodendron-birkin-main.webp',
+    available: 5,
+    type: 'cutting'
+  },
+  {
+    id: 'rubber-plant-1',
+    name: 'Rubber Plant',
+    description: 'Glossy leaves and sturdy growth for statement corners',
+    care: 'Bright light, water when top inch of soil is dry',
+    price: 15,
+    image: '/images/houseplants/rubber-plant/rubber-plant-main.webp',
+    available: 3,
+    type: 'plant'
+  }
+];
 
 export const HomePage: React.FC = () => {
+  const [cart, setCart] = useState<OrderItem[]>([]);
+
+  const addHouseplantToCart = (houseplant: Houseplant) => {
+    const existingItem = cart.find(item => item.houseplantId === houseplant.id);
+    
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.houseplantId === houseplant.id 
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ));
+    } else {
+      setCart([...cart, { houseplantId: houseplant.id, houseplant, quantity: 1 }]);
+    }
+  };
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce((sum, item) => {
+    if (item.houseplant) {
+      return sum + (item.houseplant.price * item.quantity);
+    }
+    return sum;
+  }, 0);
+
   return (
     <div className="max-w-6xl mx-auto">
+      
+      {/* Debug indicator - should always show */}
+      <div className="fixed top-4 left-4 z-50 bg-red-600 text-white rounded p-2 text-xs">
+        UPDATED VERSION - {houseplants.length} plants
+      </div>
+      
+      {/* Cart indicator */}
+      {totalItems > 0 && (
+        <div className="fixed top-4 right-4 z-50 bg-petal-600 text-white rounded-full p-3 shadow-lg">
+          <div className="flex items-center gap-2">
+            <ShoppingCart className="w-5 h-5" />
+            <span className="font-semibold">{totalItems}</span>
+            <span className="text-sm">${totalPrice}</span>
+          </div>
+        </div>
+      )}
       {/* Hero Section */}
       <div className="text-center mb-16 relative">
         {/* Decorative elements */}
@@ -170,50 +245,61 @@ export const HomePage: React.FC = () => {
           <p className="text-lg text-body text-sage-600 max-w-2xl mx-auto">
             Adopt a green companion to pair with your bouquet delivery
           </p>
+          <div className="text-red-500 font-bold text-sm mt-2">
+            DEBUG: {houseplants.length} houseplants loaded
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="card p-6 hover-lift group text-center">
-            <HouseplantImage
-              plantName="Pothos"
-              alt="Pothos houseplant with beautiful trailing vines"
-              size="main"
-              className="mb-4"
-              fallbackEmoji="🌿"
-            />
-            <h3 className="text-lg text-display text-sage-800 mb-2">Pothos</h3>
-            <p className="text-body text-sage-600 text-sm">
-              Beautiful trailing vines that thrive in any light
-            </p>
-          </div>
-          
-          <div className="card p-6 hover-lift group text-center">
-            <HouseplantImage
-              plantName="Rubber Plant"
-              alt="Rubber Plant with glossy leaves for statement corners"
-              size="main"
-              className="mb-4"
-              fallbackEmoji="🌳"
-            />
-            <h3 className="text-lg text-display text-sage-800 mb-2">Rubber Plant</h3>
-            <p className="text-body text-sage-600 text-sm">
-              Glossy leaves and sturdy growth for statement corners
-            </p>
-          </div>
-          
-          <div className="card p-6 hover-lift group text-center">
-            <HouseplantImage
-              plantName="Philodendron Birkin"
-              alt="Philodendron Birkin with striking variegated leaves and white stripes"
-              size="main"
-              className="mb-4"
-              fallbackEmoji="🌱"
-            />
-            <h3 className="text-lg text-display text-sage-800 mb-2">Philodendron Birkin</h3>
-            <p className="text-body text-sage-600 text-sm">
-              Striking variegated leaves with elegant white stripes
-            </p>
-          </div>
+          {houseplants.map((plant) => (
+            <div key={plant.id} className="card p-6 hover-lift group text-center">
+              {/* Clickable image and title area */}
+              <Link to={`/houseplant/${plant.id}`} className="block mb-4">
+                <HouseplantImage
+                  plantName={plant.name}
+                  alt={`${plant.name} - ${plant.description}`}
+                  size="main"
+                  className="mb-4 cursor-pointer"
+                  fallbackEmoji={plant.name.includes('Pothos') ? '🌿' : plant.name.includes('Rubber') ? '🌳' : '🌱'}
+                />
+                <h3 className="text-lg text-display text-sage-800 mb-2 hover:text-petal-600 transition-colors cursor-pointer">
+                  {plant.name}
+                </h3>
+              </Link>
+              
+              <p className="text-body text-sage-600 text-sm mb-3">
+                {plant.description}
+              </p>
+              <div className="text-red-500 text-xs mb-2">
+                DEBUG: ${plant.price} - {plant.type} - {plant.available} available
+              </div>
+              
+              {/* Pricing and availability */}
+              <div className="mb-4">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <span className="text-xl font-heading font-semibold text-petal-600">
+                    ${plant.price}
+                  </span>
+                  <span className="text-sm text-sage-500">
+                    {plant.type === 'cutting' ? 'per rooted cutting' : 'per plant'}
+                  </span>
+                </div>
+                <div className="text-sm text-sage-500">
+                  {plant.available} available
+                </div>
+              </div>
+              
+              {/* Add to cart button */}
+              <button
+                onClick={() => addHouseplantToCart(plant)}
+                disabled={plant.available === 0}
+                className="btn-primary w-full text-sm py-2 px-4 flex items-center justify-center gap-2 hover-bloom disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Plus className="w-4 h-4" />
+                Add to Cart
+              </button>
+            </div>
+          ))}
         </div>
         
         <div className="text-center mt-8">

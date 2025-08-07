@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage';
 import { OrderPage } from './pages/OrderPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { ConfirmationPage } from './pages/ConfirmationPage';
+import { HouseplantDetailPage } from './pages/HouseplantDetailPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/order" element={<OrderPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/confirmation" element={<ConfirmationPage />} />
+              <Route path="/houseplant/:id" element={<HouseplantDetailPage />} />
             </Routes>
           </div>
         </main>

@@ -72,7 +72,12 @@ export const OrderPage: React.FC = () => {
     }
   };
 
-  const totalPrice = cart.reduce((sum, item) => sum + (item.bouquet.price * item.quantity), 0);
+  const totalPrice = cart.reduce((sum, item) => {
+    if (item.bouquet) {
+      return sum + (item.bouquet.price * item.quantity);
+    }
+    return sum;
+  }, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -218,19 +223,19 @@ export const OrderPage: React.FC = () => {
                   {cart.map((item) => (
                     <div key={item.bouquetId} className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
                       <div className="flex-1">
-                        <h4 className="font-medium text-sage-800">{item.bouquet.name}</h4>
-                        <p className="text-sm text-sage-600">${item.bouquet.price} each</p>
+                        <h4 className="font-medium text-sage-800">{item.bouquet?.name}</h4>
+                        <p className="text-sm text-sage-600">${item.bouquet?.price} each</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => updateQuantity(item.bouquetId, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.bouquetId!, item.quantity - 1)}
                           className="w-6 h-6 rounded-full bg-sage-200 text-sage-700 flex items-center justify-center text-sm"
                         >
                           -
                         </button>
                         <span className="w-6 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.bouquetId, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.bouquetId!, item.quantity + 1)}
                           className="w-6 h-6 rounded-full bg-sage-200 text-sage-700 flex items-center justify-center text-sm"
                         >
                           +

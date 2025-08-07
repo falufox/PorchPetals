@@ -52,7 +52,8 @@ export const BouquetImage: React.FC<BouquetImageProps> = ({
   // Generate image paths
   const getImagePath = (format: 'webp' | 'jpg') => {
     const normalizedName = bouquetName.toLowerCase().replace(/\s+/g, '-');
-    return `/images/bouquets/${normalizedName}/${normalizedName}-${size}.${format}`;
+    const path = `/images/bouquets/${normalizedName}/${normalizedName}-${size}.${format}`;
+    return path;
   };
 
   const webpPath = getImagePath('webp');

@@ -18,9 +18,22 @@ export interface DeliveryWindow {
   available: boolean;
 }
 
+export interface Houseplant {
+  id: string;
+  name: string;
+  description: string;
+  care: string;
+  price: number;
+  image: string;
+  available: number;
+  type: 'cutting' | 'plant';
+}
+
 export interface OrderItem {
-  bouquetId: string;
-  bouquet: Bouquet;
+  bouquetId?: string;
+  houseplantId?: string;
+  bouquet?: Bouquet;
+  houseplant?: Houseplant;
   quantity: number;
 }
 

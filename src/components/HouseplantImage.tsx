@@ -49,22 +49,23 @@ export const HouseplantImage: React.FC<HouseplantImageProps> = ({
 
   // Generate image paths - normalize plant names to folder structure
   const getImagePath = (format: 'webp' | 'jpg') => {
-    let normalizedName = plantName.toLowerCase().replace(/\s+/g, '-');
-    let folderName = normalizedName;
+    let folderName = plantName.toLowerCase().replace(/\s+/g, '-');
+    let fileName = plantName.toLowerCase().replace(/\s+/g, '-');
     
-    // Handle specific plant name mappings
+    // Handle specific plant name mappings to match actual file structure
     if (plantName.toLowerCase().includes('rubber')) {
       folderName = 'rubber-plant';
-      normalizedName = 'rubberplant';
+      fileName = 'rubberplant'; // Files are named "rubberplant-*.jpg"
     } else if (plantName.toLowerCase().includes('philodendron')) {
       folderName = 'philodendron-birkin';
-      normalizedName = 'philodendron birkin';
+      fileName = 'philodendron-birkin'; // Files are now named "philodendron-birkin-*.jpg" (with hyphens)
     } else if (plantName.toLowerCase().includes('pothos')) {
       folderName = 'pothos';
-      normalizedName = 'pothos';
+      fileName = 'pothos';
     }
     
-    return `/images/houseplants/${folderName}/${normalizedName}-${size}.${format}`;
+    const fullPath = `/images/houseplants/${folderName}/${fileName}-${size}.${format}`;
+    return fullPath;
   };
 
   const webpPath = getImagePath('webp');
