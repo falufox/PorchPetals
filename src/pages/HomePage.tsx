@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Clock, MapPin, Sparkles, Plus, ShoppingCart } from 'lucide-react';
+import { Heart, Clock, MapPin, Sparkles, Plus } from 'lucide-react';
 import { BouquetImage } from '../components/BouquetImage';
 import { HouseplantImage } from '../components/HouseplantImage';
-import type { Houseplant, OrderItem } from '../types';
+import { useCart } from '../context/CartContext';
+import type { Houseplant } from '../types';
 
 // Houseplant data with correct pricing
 const houseplants: Houseplant[] = [
@@ -40,29 +41,7 @@ const houseplants: Houseplant[] = [
 ];
 
 export const HomePage: React.FC = () => {
-  const [cart, setCart] = useState<OrderItem[]>([]);
-
-  const addHouseplantToCart = (houseplant: Houseplant) => {
-    const existingItem = cart.find(item => item.houseplantId === houseplant.id);
-    
-    if (existingItem) {
-      setCart(cart.map(item => 
-        item.houseplantId === houseplant.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
-    } else {
-      setCart([...cart, { houseplantId: houseplant.id, houseplant, quantity: 1 }]);
-    }
-  };
-
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => {
-    if (item.houseplant) {
-      return sum + (item.houseplant.price * item.quantity);
-    }
-    return sum;
-  }, 0);
+  const { addHouseplantToCart } = useCart();
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -71,17 +50,6 @@ export const HomePage: React.FC = () => {
       <div className="fixed top-4 left-4 z-50 bg-red-600 text-white rounded p-2 text-xs">
         UPDATED VERSION - {houseplants.length} plants
       </div>
-      
-      {/* Cart indicator */}
-      {totalItems > 0 && (
-        <div className="fixed top-4 right-4 z-50 bg-petal-600 text-white rounded-full p-3 shadow-lg">
-          <div className="flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5" />
-            <span className="font-semibold">{totalItems}</span>
-            <span className="text-sm">${totalPrice}</span>
-          </div>
-        </div>
-      )}
       {/* Hero Section */}
       <div className="text-center mb-16 relative">
         {/* Decorative elements */}

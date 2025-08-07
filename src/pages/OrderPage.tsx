@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Clock, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
-import type { Bouquet, OrderItem } from '../types';
+import type { Bouquet } from '../types';
 import { DoorPreview } from '../components/DoorPreview';
 import { useInventory } from '../hooks/useInventory';
 import { BouquetImage } from '../components/BouquetImage';
+import { useCart } from '../context/CartContext';
 
 // Mock data - this will be replaced with Notion API
 const mockBouquets: Bouquet[] = [
@@ -36,49 +37,14 @@ const mockBouquets: Bouquet[] = [
 
 export const OrderPage: React.FC = () => {
   const { bouquets, loading, error, lastUpdated, refresh } = useInventory();
-  const [cart, setCart] = useState<OrderItem[]>([]);
+  const { cart, addBouquetToCart, updateQuantity, getTotalItems, getTotalPrice } = useCart();
   const [selectedBouquetForPreview, setSelectedBouquetForPreview] = useState<Bouquet | null>(null);
   
   // Use mock data only (disable Notion API temporarily)
   const displayBouquets = mockBouquets;
 
-  const addToCart = (bouquet: Bouquet) => {
-    const existingItem = cart.find(item => item.bouquetId === bouquet.id);
-    
-    if (existingItem) {
-      setCart(cart.map(item => 
-        item.bouquetId === bouquet.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
-    } else {
-      setCart([...cart, { bouquetId: bouquet.id, bouquet, quantity: 1 }]);
-    }
-  };
-
-  const removeFromCart = (bouquetId: string) => {
-    setCart(cart.filter(item => item.bouquetId !== bouquetId));
-  };
-
-  const updateQuantity = (bouquetId: string, quantity: number) => {
-    if (quantity === 0) {
-      removeFromCart(bouquetId);
-    } else {
-      setCart(cart.map(item => 
-        item.bouquetId === bouquetId 
-          ? { ...item, quantity }
-          : item
-      ));
-    }
-  };
-
-  const totalPrice = cart.reduce((sum, item) => {
-    if (item.bouquet) {
-      return sum + (item.bouquet.price * item.quantity);
-    }
-    return sum;
-  }, 0);
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = getTotalPrice();
+  const totalItems = getTotalItems();
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -179,7 +145,7 @@ export const OrderPage: React.FC = () => {
                     Preview on Door
                   </button>
                   <button
-                    onClick={() => addToCart(bouquet)}
+                    onClick={() => addBouquetToCart(bouquet)}
                     disabled={bouquet.available === 0}
                     className={`w-full ${
                       bouquet.available === 0 
@@ -221,21 +187,29 @@ export const OrderPage: React.FC = () => {
               <>
                 <div className="space-y-3 mb-6">
                   {cart.map((item) => (
-                    <div key={item.bouquetId} className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
+                    <div key={item.bouquetId || item.houseplantId} className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
                       <div className="flex-1">
-                        <h4 className="font-medium text-sage-800">{item.bouquet?.name}</h4>
-                        <p className="text-sm text-sage-600">${item.bouquet?.price} each</p>
+                        <h4 className="font-medium text-sage-800">{item.bouquet?.name || item.houseplant?.name}</h4>
+                        <p className="text-sm text-sage-600">${item.bouquet?.price || item.houseplant?.price} each</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => updateQuantity(item.bouquetId!, item.quantity - 1)}
+                          onClick={() => {
+                            const itemId = item.bouquetId || item.houseplantId!;
+                            const itemType = item.bouquet ? 'bouquet' : 'houseplant';
+                            updateQuantity(itemId, itemType, item.quantity - 1);
+                          }}
                           className="w-6 h-6 rounded-full bg-sage-200 text-sage-700 flex items-center justify-center text-sm"
                         >
                           -
                         </button>
                         <span className="w-6 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.bouquetId!, item.quantity + 1)}
+                          onClick={() => {
+                            const itemId = item.bouquetId || item.houseplantId!;
+                            const itemType = item.bouquet ? 'bouquet' : 'houseplant';
+                            updateQuantity(itemId, itemType, item.quantity + 1);
+                          }}
                           className="w-6 h-6 rounded-full bg-sage-200 text-sage-700 flex items-center justify-center text-sm"
                         >
                           +

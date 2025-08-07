@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Plus, Minus, ShoppingCart, Heart, Leaf, Droplets, Sun } from 'lucide-react';
 import { HouseplantImage } from '../components/HouseplantImage';
-import type { Houseplant, OrderItem } from '../types';
+import { useCart } from '../context/CartContext';
+import type { Houseplant } from '../types';
 
 // Houseplant data - same as HomePage
 const houseplants: Houseplant[] = [
@@ -75,7 +76,7 @@ const getCareInfo = (plantName: string) => {
 export const HouseplantDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
-  const [cart, setCart] = useState<OrderItem[]>([]);
+  const { addHouseplantToCart } = useCart();
 
   const plant = houseplants.find(p => p.id === id);
 
@@ -94,33 +95,14 @@ export const HouseplantDetailPage: React.FC = () => {
   const careInfo = getCareInfo(plant.name);
 
   const addToCart = () => {
-    const existingItem = cart.find(item => item.houseplantId === plant.id);
-    
-    if (existingItem) {
-      setCart(cart.map(item => 
-        item.houseplantId === plant.id 
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
-      ));
-    } else {
-      setCart([...cart, { houseplantId: plant.id, houseplant: plant, quantity }]);
-    }
+    addHouseplantToCart(plant, quantity);
+    setQuantity(1); // Reset quantity after adding
   };
 
   const totalPrice = plant.price * quantity;
-  const cartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* Cart indicator */}
-      {cartItems > 0 && (
-        <div className="fixed top-4 right-4 z-50 bg-petal-600 text-white rounded-full p-3 shadow-lg">
-          <div className="flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5" />
-            <span className="font-semibold">{cartItems}</span>
-          </div>
-        </div>
-      )}
 
       {/* Back button */}
       <div className="mb-6">
