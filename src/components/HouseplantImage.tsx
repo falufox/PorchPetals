@@ -65,6 +65,7 @@ export const HouseplantImage: React.FC<HouseplantImageProps> = ({
     }
     
     const fullPath = `/images/houseplants/${folderName}/${fileName}-${size}.${format}`;
+    console.log(`🔍 ${plantName} (${format}):`, fullPath);
     return fullPath;
   };
 
@@ -73,12 +74,14 @@ export const HouseplantImage: React.FC<HouseplantImageProps> = ({
 
   // Handle image load success
   const handleImageLoad = () => {
+    console.log(`✅ ${plantName} image loaded successfully`);
     setImageLoaded(true);
     setImageError(false);
   };
 
   // Handle image load error
   const handleImageError = () => {
+    console.log(`❌ ${plantName} image failed to load`);
     setImageError(true);
     setImageLoaded(false);
   };

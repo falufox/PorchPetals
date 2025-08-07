@@ -46,10 +46,35 @@ export const HomePage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto">
       
-      {/* Debug indicator - should always show */}
-      <div className="fixed top-4 left-4 z-50 bg-red-600 text-white rounded p-2 text-xs">
-        UPDATED VERSION - {houseplants.length} plants
+      {/* Temporary direct image test */}
+      <div className="mb-8 p-4 border border-blue-500">
+        <h3 className="text-lg font-bold mb-4">Direct Image Test</h3>
+        <div className="flex gap-4">
+          <div>
+            <p className="text-sm mb-2">Direct img tag:</p>
+            <img 
+              src="/images/houseplants/pothos/pothos-main.webp" 
+              alt="Direct pothos test"
+              className="w-32 h-32 object-cover border"
+              onLoad={() => console.log('✅ Direct pothos loaded')}
+              onError={() => console.log('❌ Direct pothos failed')}
+            />
+          </div>
+          <div>
+            <p className="text-sm mb-2">HouseplantImage component:</p>
+            <div className="w-32 h-32 border">
+              <HouseplantImage
+                plantName="Pothos"
+                alt="Component pothos test"
+                size="main"
+                loading="eager"
+                fallbackEmoji="🌿"
+              />
+            </div>
+          </div>
+        </div>
       </div>
+      
       {/* Hero Section */}
       <div className="text-center mb-16 relative">
         {/* Decorative elements */}
@@ -213,9 +238,6 @@ export const HomePage: React.FC = () => {
           <p className="text-lg text-body text-sage-600 max-w-2xl mx-auto">
             Adopt a green companion to pair with your bouquet delivery
           </p>
-          <div className="text-red-500 font-bold text-sm mt-2">
-            DEBUG: {houseplants.length} houseplants loaded
-          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -228,6 +250,7 @@ export const HomePage: React.FC = () => {
                   alt={`${plant.name} - ${plant.description}`}
                   size="main"
                   className="mb-4 cursor-pointer"
+                  loading="eager"
                   fallbackEmoji={plant.name.includes('Pothos') ? '🌿' : plant.name.includes('Rubber') ? '🌳' : '🌱'}
                 />
                 <h3 className="text-lg text-display text-sage-800 mb-2 hover:text-petal-600 transition-colors cursor-pointer">
@@ -238,9 +261,6 @@ export const HomePage: React.FC = () => {
               <p className="text-body text-sage-600 text-sm mb-3">
                 {plant.description}
               </p>
-              <div className="text-red-500 text-xs mb-2">
-                DEBUG: ${plant.price} - {plant.type} - {plant.available} available
-              </div>
               
               {/* Pricing and availability */}
               <div className="mb-4">
