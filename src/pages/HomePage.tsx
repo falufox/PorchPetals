@@ -46,60 +46,6 @@ export const HomePage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto">
       
-      {/* Temporary direct image test */}
-      <div className="mb-8 p-4 border border-blue-500">
-        <h3 className="text-lg font-bold mb-4">Direct Image Test (Updated)</h3>
-        <div className="flex gap-4">
-          <div>
-            <p className="text-sm mb-2">Test image paths:</p>
-            <div className="space-y-2">
-              <div>
-                <p className="text-xs">WebP:</p>
-                <img 
-                  src="/images/houseplants/pothos/pothos-main.webp" 
-                  alt="Direct pothos webp test"
-                  className="w-24 h-24 object-cover border"
-                  onLoad={() => console.log('✅ Direct pothos WebP loaded')}
-                  onError={() => console.log('❌ Direct pothos WebP failed')}
-                />
-              </div>
-              <div>
-                <p className="text-xs">JPEG:</p>
-                <img 
-                  src="/images/houseplants/pothos/pothos-main.jpg" 
-                  alt="Direct pothos jpg test"
-                  className="w-24 h-24 object-cover border"
-                  onLoad={() => console.log('✅ Direct pothos JPEG loaded')}
-                  onError={() => console.log('❌ Direct pothos JPEG failed')}
-                />
-              </div>
-              <div>
-                <p className="text-xs">Owner photo (should work):</p>
-                <img 
-                  src="/porchpetalsowner.PNG" 
-                  alt="Owner photo test"
-                  className="w-24 h-24 object-cover border"
-                  onLoad={() => console.log('✅ Owner photo loaded')}
-                  onError={() => console.log('❌ Owner photo failed')}
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm mb-2">HouseplantImage component:</p>
-            <div className="w-32 h-32 border">
-              <HouseplantImage
-                plantName="Pothos"
-                alt="Component pothos test"
-                size="main"
-                loading="eager"
-                fallbackEmoji="🌿"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      
       {/* Hero Section */}
       <div className="text-center mb-16 relative">
         {/* Decorative elements */}

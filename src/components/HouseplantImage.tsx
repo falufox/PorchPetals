@@ -65,23 +65,19 @@ export const HouseplantImage: React.FC<HouseplantImageProps> = ({
     }
     
     const fullPath = `/images/houseplants/${folderName}/${fileName}-${size}.${format}`;
-    console.log(`🔍 ${plantName} (${format}):`, fullPath);
     return fullPath;
   };
 
-  const webpPath = getImagePath('webp');
   const jpgPath = getImagePath('jpg');
 
   // Handle image load success
   const handleImageLoad = () => {
-    console.log(`✅ ${plantName} image loaded successfully`);
     setImageLoaded(true);
     setImageError(false);
   };
 
   // Handle image load error
   const handleImageError = () => {
-    console.log(`❌ ${plantName} image failed to load`);
     setImageError(true);
     setImageLoaded(false);
   };
@@ -134,27 +130,23 @@ export const HouseplantImage: React.FC<HouseplantImageProps> = ({
       {/* Loading placeholder while image loads */}
       {!imageLoaded && <LoadingPlaceholder />}
       
-      {/* Optimized image with WebP and JPEG fallback */}
-      <picture className={imageLoaded ? 'block' : 'hidden'}>
-        <source srcSet={webpPath} type="image/webp" />
-        <source srcSet={jpgPath} type="image/jpeg" />
-        <img
-          ref={imgRef}
-          src={jpgPath}
-          alt={alt}
-          className={`
-            ${sizeClasses[size]} 
-            object-cover 
-            transition-all 
-            duration-500
-            group-hover:scale-105
-            ${imageLoaded ? 'opacity-100' : 'opacity-0'}
-          `}
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-          loading={loading}
-        />
-      </picture>
+      {/* Use JPEG images directly since WebP has server issues */}
+      <img
+        ref={imgRef}
+        src={jpgPath}
+        alt={alt}
+        className={`
+          ${sizeClasses[size]} 
+          object-cover 
+          transition-all 
+          duration-500
+          group-hover:scale-105
+          ${imageLoaded ? 'opacity-100' : 'opacity-0'}
+        `}
+        onLoad={handleImageLoad}
+        onError={handleImageError}
+        loading={loading}
+      />
 
       {/* Decorative elements that match the original design */}
       {imageLoaded && (
